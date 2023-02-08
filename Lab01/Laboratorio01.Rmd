@@ -1,0 +1,98 @@
+---
+title: "Laboratorio 01"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-02-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Bloque 0
+
+### Problema 1
+
+```{r, p1}
+  x = c(1,2,3,4)
+  y = seq(1:10)
+  z = seq(2,10,2)
+  w = rep(0,10)
+  y[3] = 1
+```
+
+### Problema 2
+```{r, p2}
+  curve(x+1, from=1, to=10 ,xlab="x", ylab="y")
+  curve((x^2)+1, from=1, to=10, xlab="x", ylab="y")
+  curve(sin(x), from=1, to=10, xlab="x", ylab="y")
+  curve(cos(x), from=1, to=10, xlab="x", ylab="y")
+  curve(log(x), from=1, to=10, xlab="x", ylab="y")
+```
+
+
+### Problema 3
+```{r,p3}
+  curve(x+1, from=1, to=10 ,xlab="x", ylab="y")
+  curve((x^2)+1, from=1, to=10, xlab="x", ylab="y")
+  curve(sin(x), from=1, to=10, xlab="x", ylab="y")
+  curve(cos(x), from=1, to=10, xlab="x", ylab="y")
+  curve(log(x), from=1, to=10, xlab="x", ylab="y")
+```
+
+
+### Problema 4
+```{r, p4}
+library(readr)
+dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.csv")
+  #str(dat)
+  #dim(dat)
+  #colnames(dat)
+  #names(dat)
+  #nrow(dat)
+  #ncol(dat)
+  #head(dat)
+  #tail(dat)
+  dat["temperature"] = (dat["temperature"] * (9/5)) + 32
+  dat[dat$driver == 'Domenico',]
+  dat[dat$pizzas >= 4,"day"]
+```
+
+## Bloque 1
+
+### Problema 5
+- day : cuantitativa-discreta
+- date : cualitativa-ordinal
+- time : cuantitativa-discreta
+- operator : cualitativa-nominal
+- branch :
+- driver : cualitativa-nominal
+- temperature : cuantitativa-continua
+- bill : cuantitativa-discreta
+- pizzas : cuantitativa-discreta
+- free_wine : cualitativa-nominal
+- got_wine : cualitativa-nominal
+- discount_customer : cuantitativa-continua
+
+### Problema 6
+
+```{r p6}
+  fi <- table(dat$driver)
+  hi <- fi/length(dat$driver)
+  barplot(fi)
+  tabla <- cbind(fi,hi)
+```
+### Problema 7
+
+```{r}
+table(dat[dat$free_wine==TRUE,7])
+```
+
+### Problema 8
+
+```{r}
+table(dat[dat$free_wine==T & dat$got_wine==T,6])
+```
+
+
