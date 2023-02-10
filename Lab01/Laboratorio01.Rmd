@@ -62,11 +62,11 @@ dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.
 ## Bloque 1
 
 ### Problema 5
-- day : cuantitativa-discreta
+- day : cualitativa-discreta
 - date : cualitativa-ordinal
 - time : cuantitativa-discreta
 - operator : cualitativa-nominal
-- branch :
+- branch : cualitativa - ? 
 - driver : cualitativa-nominal
 - temperature : cuantitativa-continua
 - bill : cuantitativa-discreta
@@ -95,4 +95,23 @@ table(dat[dat$free_wine==TRUE,7])
 table(dat[dat$free_wine==T & dat$got_wine==T,6])
 ```
 
+
+## Bloque 2
+
+### Problema 1
+
+```{r}
+  fi = hist(dat$temperature)
+```
+
+
+```{r}
+  min = min(dat$time)
+  max = max(dat$time)
+  A = (max-min)/6
+  
+  frecuency = cut(dat$time, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
+  table = table(frecuency)
+  table
+```
 
