@@ -73,7 +73,7 @@ dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.
 - pizzas : cuantitativa-discreta
 - free_wine : cualitativa-nominal
 - got_wine : cualitativa-nominal
-- discount_customer : cuantitativa-continua
+- discount_customer : cualitativa- ?
 
 ### Problema 6
 
@@ -101,11 +101,13 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
 ### Problema 1
 
 ```{r}
+  # temperature
   fi = hist(dat$temperature)
 ```
 
 
 ```{r}
+  #time
   min = min(dat$time)
   max = max(dat$time)
   A = (max-min)/6
@@ -113,5 +115,28 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
   frecuency = cut(dat$time, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
   table = table(frecuency)
   table
+```
+
+
+```{r}
+  # bill
+  fi = hist(dat$bill)
+```
+
+```{r}
+  #pizzas
+  # min = min(dat$pizzas)
+  # max = max(dat$pizzas)
+  # A = (max-min)/6
+  # 
+  # frecuency = cut(dat$pizzas, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
+  # table = table(frecuency)
+  # table
+  
+  fi <- table(dat$pizzas)
+  hi <- fi/length(dat$pizzas)
+  barplot(fi)
+  tabla <- cbind(fi,hi)
+  tabla
 ```
 
