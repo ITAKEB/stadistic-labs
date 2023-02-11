@@ -110,11 +110,15 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
   #time
   min = min(dat$time)
   max = max(dat$time)
-  A = (max-min)/6
+  k = 5
+  A = (max-min)/ k
   
-  frecuency = cut(dat$time, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
-  table = table(frecuency)
-  table
+  intervals = cut(dat$time, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
+  fi = table(intervals)
+  
+  porc = (fi/ length(dat$time))*100 
+  cbind(fi,porc)
+  
 ```
 
 
@@ -124,19 +128,10 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
 ```
 
 ```{r}
-  #pizzas
-  # min = min(dat$pizzas)
-  # max = max(dat$pizzas)
-  # A = (max-min)/6
-  # 
-  # frecuency = cut(dat$pizzas, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
-  # table = table(frecuency)
-  # table
-  
-  fi <- table(dat$pizzas)
-  hi <- fi/length(dat$pizzas)
+  fi = table(dat$pizzas)
+  hi  = fi/length(dat$pizzas)
+  # porc = (fi/ length(dat$pizzas))*100 
   barplot(fi)
-  tabla <- cbind(fi,hi)
-  tabla
+  
 ```
 
