@@ -1,7 +1,8 @@
 ---
 title: "Laboratorio 01"
 output:
-  html_document: default
+  html_document:
+    df_print: paged
   pdf_document: default
 date: "2023-02-08"
 ---
@@ -114,24 +115,26 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
   A = (max-min)/ k
   
   intervals = cut(dat$time, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
-  fi = table(intervals)
   
+  fi = table(intervals)
   porc = (fi/ length(dat$time))*100 
-  cbind(fi,porc)
+  porc = round(porc,2)
+  
+  pie(porc, porc, col = 2:7)
+  legend("topleft",legend=names(fi), fill=2:7)
   
 ```
 
 
 ```{r}
   # bill
-  fi = hist(dat$bill)
+  fi = hist(dat$bill, xlab= "Bill", ylab = "Frequency", main= "Histogram of bill", col = 2:3)
 ```
 
 ```{r}
   fi = table(dat$pizzas)
   hi  = fi/length(dat$pizzas)
-  # porc = (fi/ length(dat$pizzas))*100 
-  barplot(fi)
-  
+  porc = (fi/ length(dat$pizzas))*100 
+  barplot(fi, col=3:4)
 ```
 
