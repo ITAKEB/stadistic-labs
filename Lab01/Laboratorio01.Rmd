@@ -46,7 +46,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Problema 4
 ```{r, p4}
 library(readr)
-dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.csv")
+dat = read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.csv")
   #str(dat)
   #dim(dat)
   #colnames(dat)
@@ -79,10 +79,10 @@ dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.
 ### Problema 6
 
 ```{r p6}
-  fi <- table(dat$driver)
-  hi <- fi/length(dat$driver)
+  fi = table(dat$driver)
+  hi = fi/length(dat$driver)
   barplot(fi)
-  tabla <- cbind(fi,hi)
+  tabla = cbind(fi,hi)
 ```
 ### Problema 7
 
@@ -101,33 +101,36 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
 
 ### Problema 1
 
+#### Temperature
+Como podemos observar en la siguiente tabla de frecuencia, la temperatura más habitual con la que se entrega la pizza varía en un rango dentro de (145,152] y (137,145], siendo el primero el más común. Además, la temperatura menos habitual se encuentra en un rango de (190,197], siendo solo 1 pizza la que se entregó con esta temperatura. Cabe recalcar que esta tabla de frecuencia se hizo con una número de clase igual a 5 para su análisis.
+
 ```{r}
     # Temperature
-    library(readr)
-    db <- read_csv("./pizzadelivery.csv")
+    # library(readr)
+    # db = read_csv("./pizzadelivery.csv")
     # Variable: Time
-    temp_list <- db$temperature;
+    temp_list = dat$temperature
     
     # Calculate information to create frequency table
-    min<- min(temp_list);
-    max <- max(temp_list);
-    length <- length(temp_list);
-    range <- max - min;
-    class_num <- round(1 + log(length, 2));
-    class_width <- round(range / class_num, 2);
+    min= min(temp_list)
+    max = max(temp_list)
+    length = length(temp_list)
+    range = max - min
+    class_num = round(1 + log(length, 2))
+    class_width = round(range / class_num, 2)
     
-    print(c("Min", min));
-    print(c("Max", max));
-    print(c("Length", length));
-    print(c("Range", range));
-    print(c("Class Number", class_num));
-    print(c("Class Width", class_width));
+    print(c("Min", min))
+    print(c("Max", max))
+    print(c("Length", length))
+    print(c("Range", range))
+    print(c("Class Number", class_num))
+    print(c("Class Width", class_width))
     
     #Calculate intervals and midpoints
-    sequ <- seq(min, max + class_width, class_width);
-    intervals <- cut(temp_list, sequ, right = TRUE, include.lowest = TRUE);
-    abs_freq <- table(intervals);
-    midpoints <- round((head(sequ, -1) + diff(sequ) / 2), 2);
+    sequ = seq(min, max + class_width, class_width)
+    intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
+    abs_freq = table(intervals)
+    midpoints = round((head(sequ, -1) + diff(sequ) / 2), 2)
     
     #Generate frequency table
     freq_table = cbind(
@@ -136,12 +139,12 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
         Reltv = round(abs_freq / length(temp_list), 2), 
         Acm = cumsum(abs_freq),
         ReAcm = round(cumsum(abs_freq) / length(temp_list))
-    );
+    )
     
-    print(freq_table);
-    #fi = hist(dat$temperature)
+    print(freq_table)
 ```
-
+#### Time
+Por medio del siguiente gráfico, podemos notar como el tiempo más usual de una entrega se tarde entre 28.6 y 36.8 minutos, puesto que el 45% de las pizzas son entregadas en este periodo de tiempo. Por otro lado, lo menos habitual es que una pizza sea entregada en un periodo de 12.3 y 20.5 minutos, ya que solo el 2.21% de las pizzas son entregadas durante este.
 
 ```{r}
   #time
@@ -156,16 +159,24 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
   porc = (fi/ length(dat$time))*100 
   porc = round(porc,2)
   
-  pie(porc, porc, col = 2:7)
+  pie(porc, porc, col = 2:7, main= "Time")
   legend("topleft",legend=names(fi), fill=2:7)
   
 ```
-
+#### Bill
+Para el caso de la variable Bill (cuenta), realizamos el análisis de frecuencia mediante el siguiente histograma, describiendo el siguiente comportamiento:
+ - Entre [35, 40) y [45,50) tienen una frecuencia absoluta mayor o igual a 200
+ - Entre [0, 10) tienen una frecuencia absoluta de 1
 
 ```{r}
   # bill
   fi = hist(dat$bill, xlab= "Bill", ylab = "Frequency", main= "Histogram of bill", col = 2:3)
+
+  # fi$counts
+  
 ```
+#### Pizzas
+Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la cantidad pedida con mayor frecuencia va de un rango de 2 a 3 pizzas por orden. A su vez, podemos ver en la siguiente ilustración como el numero de 8, 9 y 11 pizzas son las cantidades más inusuales en la tienda.
 
 ```{r}
   fi = table(dat$pizzas)
