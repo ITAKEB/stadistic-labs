@@ -102,8 +102,44 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
 ### Problema 1
 
 ```{r}
-  # temperature
-  fi = hist(dat$temperature)
+    # Temperature
+    library(readr)
+    db <- read_csv("./pizzadelivery.csv")
+    # Variable: Time
+    temp_list <- db$temperature;
+    
+    # Calculate information to create frequency table
+    min<- min(temp_list);
+    max <- max(temp_list);
+    length <- length(temp_list);
+    range <- max - min;
+    class_num <- round(1 + log(length, 2));
+    class_width <- round(range / class_num, 2);
+    
+    print(c("Min", min));
+    print(c("Max", max));
+    print(c("Length", length));
+    print(c("Range", range));
+    print(c("Class Number", class_num));
+    print(c("Class Width", class_width));
+    
+    #Calculate intervals and midpoints
+    sequ <- seq(min, max + class_width, class_width);
+    intervals <- cut(temp_list, sequ, right = TRUE, include.lowest = TRUE);
+    abs_freq <- table(intervals);
+    midpoints <- round((head(sequ, -1) + diff(sequ) / 2), 2);
+    
+    #Generate frequency table
+    freq_table = cbind(
+        Mark = midpoints,
+        Abs = abs_freq, 
+        Reltv = round(abs_freq / length(temp_list), 2), 
+        Acm = cumsum(abs_freq),
+        ReAcm = round(cumsum(abs_freq) / length(temp_list))
+    );
+    
+    print(freq_table);
+    #fi = hist(dat$temperature)
 ```
 
 
