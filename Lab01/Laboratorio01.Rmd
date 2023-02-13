@@ -1,9 +1,7 @@
 ---
 title: "Laboratorio 01"
 output:
-  html_document:
-    df_print: paged
-  pdf_document: default
+    pdf_document: default
 date: "2023-02-08"
 ---
 
@@ -46,7 +44,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Problema 4
 ```{r, p4}
 library(readr)
-dat = read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.csv")
+dat = read_csv("./pizzadelivery.csv")
   #str(dat)
   #dim(dat)
   #colnames(dat)
@@ -185,3 +183,103 @@ Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la c
   barplot(fi, col=3:4)
 ```
 
+### Problema 10
+
+```{r}
+generated_freq_table = function(list_branch) {
+    # Calculate information to create frequency table
+    min = min(list_branch)
+    max = max(list_branch)
+    length = length(list_branch$temperature)
+    range = max - min
+    class_num = round(1 + log(length, 2))
+    class_width = round(range / class_num, 2)
+    
+    #Calculate intervals and midpoints
+    sequ = seq(min, max, class_width)
+    intervals = cut(list_branch$temperature, sequ, right = TRUE, include.lowest = TRUE)
+    
+    abs_freq = table(intervals)
+    #Generate frequency table
+    freq_table = cbind(Abs = abs_freq)
+
+    tree_diagr <- list("table" = freq_table, "sequ" = sequ)
+    return(tree_diagr)
+}
+
+west = data.frame(dat[dat$branch == "West", 8])
+west_table = generated_freq_table(west);
+barplot(data.frame(west_table$table)$Abs ~ head(west_table$sequ, -1), 
+	main = "Temperature West", 
+	xlab = "Intervals", 
+	ylab = "Frequency", 
+	col = "blue"
+)
+```
+```{r}
+east = data.frame(dat[dat$branch == "East", 8])
+east_table = generated_freq_table(east);
+barplot(data.frame(east_table$table)$Abs ~ head(east_table$sequ, -1), 
+	main = "Temperature East", 
+	xlab = "Intervals", 
+	ylab = "Frequency", 
+	col = "blue"
+)
+```
+```{r}
+centre = data.frame(dat[dat$branch == "Centre", 8])
+centre_table = generated_freq_table(centre);
+barplot(data.frame(centre_table$table)$Abs ~ head(centre_table$sequ, -1), 
+	main = "Temperature Centre", 
+	xlab = "Intervals", 
+	ylab = "Frequency", 
+	col = "blue"
+)
+```
+
+### Problema 11
+
+```{r}
+install.packages('dplyr')
+suppressMessages(library(dplyr))
+
+dat$weekend <- ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
+
+gb_delivery_pzz <- dat %>%
+    group_by(day) %>%
+    summarise(pizzas = sum(pizzas))
+
+gb_delivery_pzz <- gb_delivery_pzz[order(gb_delivery_pzz$pizzas, decreasing = TRUE), ]
+print(gb_delivery_pzz);
+
+weekendPizzas <- ifelse(gb_delivery_pzz$day == 'Friday' | 
+		    gb_delivery_pzz$day == 'Saturday' | 
+		    gb_delivery_pzz$day == 'Sunday', 
+		    gb_delivery_pzz$pizzas, 0);
+
+weekdayPizzas <- ifelse(gb_delivery_pzz$day != 'Friday' & 
+		    gb_delivery_pzz$day != 'Saturday' & 
+		    gb_delivery_pzz$day != 'Sunday', 
+		    gb_delivery_pzz$pizzas, 0);
+
+
+df <- data.frame(Week  = c("Weekday", "Weekend"), pizzas = c(sum(weekendPizzas), sum(weekdayPizzas)));
+
+barplot(
+	df$pizzas,
+	main = "Pizzas days",
+	xlab = "Days",
+	ylab = "# pizzas",
+	names.arg = df$Week,
+	col = "darkred",
+);
+
+barplot(
+	gb_delivery_pzz$pizzas,
+	main = "# Pizzas",
+	xlab = "Days",
+	ylab = "# pizzas",
+	names.arg = gb_delivery_pzz$day,
+	col = "darkred",
+);
+```
