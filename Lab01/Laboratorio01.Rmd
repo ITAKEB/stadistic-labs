@@ -53,7 +53,7 @@ dat = read_csv("./pizzadelivery.csv")
   #ncol(dat)
   #head(dat)
   #tail(dat)
-  dat["temperature"] = (dat["temperature"] * (9/5)) + 32
+  #dat["temperature"] = (dat["temperature"] * (9/5)) + 32
   dat[dat$driver == 'Domenico',]
   dat[dat$pizzas >= 4,"day"]
 ```
@@ -186,100 +186,26 @@ Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la c
 ### Problema 10
 
 ```{r}
-generated_freq_table = function(list_branch) {
-    # Calculate information to create frequency table
-    min = min(list_branch)
-    max = max(list_branch)
-    length = length(list_branch$temperature)
-    range = max - min
-    class_num = round(1 + log(length, 2))
-    class_width = round(range / class_num, 2)
-    
-    #Calculate intervals and midpoints
-    sequ = seq(min, max, class_width)
-    intervals = cut(list_branch$temperature, sequ, right = TRUE, include.lowest = TRUE)
-    
-    abs_freq = table(intervals)
-    #Generate frequency table
-    freq_table = cbind(Abs = abs_freq)
+    min= min(temp_list)
+    max = max(temp_list)
+    sequ = seq(min, max + 10, 10)
+    intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
 
-    tree_diagr <- list("table" = freq_table, "sequ" = sequ)
-    return(tree_diagr)
-}
-
-west = data.frame(dat[dat$branch == "West", 8])
-west_table = generated_freq_table(west);
-barplot(data.frame(west_table$table)$Abs ~ head(west_table$sequ, -1), 
-	main = "Temperature West", 
-	xlab = "Intervals", 
-	ylab = "Frequency", 
-	col = "blue"
-)
+    table = table(intervals, dat$branch)
+    par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
+    barplot(table, beside = T, col = rainbow(5), legend.text = TRUE,
+	    args.legend = list(x = "topright", bty = "n", inset = c(-0.3, 0)))
 ```
-```{r}
-east = data.frame(dat[dat$branch == "East", 8])
-east_table = generated_freq_table(east);
-barplot(data.frame(east_table$table)$Abs ~ head(east_table$sequ, -1), 
-	main = "Temperature East", 
-	xlab = "Intervals", 
-	ylab = "Frequency", 
-	col = "blue"
-)
-```
-```{r}
-centre = data.frame(dat[dat$branch == "Centre", 8])
-centre_table = generated_freq_table(centre);
-barplot(data.frame(centre_table$table)$Abs ~ head(centre_table$sequ, -1), 
-	main = "Temperature Centre", 
-	xlab = "Intervals", 
-	ylab = "Frequency", 
-	col = "blue"
-)
-```
-
 ### Problema 11
 
 ```{r}
-install.packages('dplyr')
-suppressMessages(library(dplyr))
+dat$weekend = ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
 
-dat$weekend <- ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
+weekend_pizzas = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 10])
+weekday_pizzas = sum(dat[dat$day != 'Friday' | dat$day != 'Saturday' | dat$day != 'Sunday', 10])
+barplot(c(weekday_pizzas, weekend_pizzas), main = "# pizzas", legend = c("Weekday", "Weekend"), col = c(1, 2))
 
-gb_delivery_pzz <- dat %>%
-    group_by(day) %>%
-    summarise(pizzas = sum(pizzas))
-
-gb_delivery_pzz <- gb_delivery_pzz[order(gb_delivery_pzz$pizzas, decreasing = TRUE), ]
-print(gb_delivery_pzz);
-
-weekendPizzas <- ifelse(gb_delivery_pzz$day == 'Friday' | 
-		    gb_delivery_pzz$day == 'Saturday' | 
-		    gb_delivery_pzz$day == 'Sunday', 
-		    gb_delivery_pzz$pizzas, 0);
-
-weekdayPizzas <- ifelse(gb_delivery_pzz$day != 'Friday' & 
-		    gb_delivery_pzz$day != 'Saturday' & 
-		    gb_delivery_pzz$day != 'Sunday', 
-		    gb_delivery_pzz$pizzas, 0);
-
-
-df <- data.frame(Week  = c("Weekday", "Weekend"), pizzas = c(sum(weekendPizzas), sum(weekdayPizzas)));
-
-barplot(
-	df$pizzas,
-	main = "Pizzas days",
-	xlab = "Days",
-	ylab = "# pizzas",
-	names.arg = df$Week,
-	col = "darkred",
-);
-
-barplot(
-	gb_delivery_pzz$pizzas,
-	main = "# Pizzas",
-	xlab = "Days",
-	ylab = "# pizzas",
-	names.arg = gb_delivery_pzz$day,
-	col = "darkred",
-);
+weekend_bill = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 9])
+weekday_bill = sum(dat[dat$day != 'Friday' | dat$day != 'Saturday' | dat$day != 'Sunday', 9])
+barplot(c(weekday_bill, weekend_bill), main = "Earnings", legend = c("Weekday", "Weekend"), col = c(1, 2))
 ```
