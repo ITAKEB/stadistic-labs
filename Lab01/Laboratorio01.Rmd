@@ -185,6 +185,9 @@ Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la c
 
 ### Problema 10
 
+La central que ha llegado a valores altos de temperatura es la sede East. Estando en el intervalo de (81.8, 91.8]. Por otro lado, la temperatura
+con mayor aparicion en las sedes se encuentran en el intervalo de (61.8, 71.8], seguido por el intervalo (51.8, 61.8].
+
 ```{r}
     min= min(temp_list)
     max = max(temp_list)
@@ -193,19 +196,36 @@ Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la c
 
     table = table(intervals, dat$branch)
     par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
-    barplot(table, beside = T, col = rainbow(5), legend.text = TRUE,
-	    args.legend = list(x = "topright", bty = "n", inset = c(-0.3, 0)))
+    barplot(table, beside = T, col = rainbow(5), main = "Temperature for branch °C", legend.text = TRUE,
+	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
 ```
+
 ### Problema 11
 
+
+Se han entregado mas pizzas los fines de semana (Viernes, Sabado y Domingo) que en el resto de la semana.
+
 ```{r}
-dat$weekend = ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
+    dat$weekend = ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
+    
+    weekend_pizzas = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 10])
+    weekday_pizzas = sum(dat[dat$day != 'Friday' & dat$day != 'Saturday' & dat$day != 'Sunday', 10])
+    
+    par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
+    barplot(c(weekday_pizzas, weekend_pizzas), main = "# Pizzas", col = 1:2)
+    legend(3, 2000, legend=c("Weekday", "Weekend"),
+           col = 1:2, cex=0.8, inset = c(-0.3, 0), fill = 1:2)
+```
 
-weekend_pizzas = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 10])
-weekday_pizzas = sum(dat[dat$day != 'Friday' | dat$day != 'Saturday' | dat$day != 'Sunday', 10])
-barplot(c(weekday_pizzas, weekend_pizzas), main = "# pizzas", legend = c("Weekday", "Weekend"), col = c(1, 2))
+Se ha conseguido mayor ganancia los fines de semana (Viernes, Sabado y Domingo) que en el resto de la semana. Era de esperarse debido a que
+existe mayor demanda de pizzas los fines de semana.
 
-weekend_bill = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 9])
-weekday_bill = sum(dat[dat$day != 'Friday' | dat$day != 'Saturday' | dat$day != 'Sunday', 9])
-barplot(c(weekday_bill, weekend_bill), main = "Earnings", legend = c("Weekday", "Weekend"), col = c(1, 2))
+```{r}
+    weekend_bill = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 9])
+    weekday_bill = sum(dat[dat$day != 'Friday' & dat$day != 'Saturday' & dat$day != 'Sunday', 9])
+    
+    par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
+    barplot(c(weekday_bill, weekend_bill), main = "Earnings", col = 1:2)
+    legend(3, 25000, legend=c("Weekday", "Weekend"),
+           col = 1:2, cex=0.8, inset = c(-0.3, 0), fill = 1:2)
 ```
