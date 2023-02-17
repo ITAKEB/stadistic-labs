@@ -108,9 +108,9 @@ Como podemos observar en la siguiente tabla de frecuencia, la temperatura más h
     # db = read_csv("./pizzadelivery.csv")
     # Variable: Time
     temp_list = dat$temperature
-    
+
     # Calculate information to create frequency table
-    min= min(temp_list)
+    min = min(temp_list)
     max = max(temp_list)
     length = length(temp_list)
     range = max - min
@@ -124,7 +124,7 @@ Como podemos observar en la siguiente tabla de frecuencia, la temperatura más h
     print(c("Class Number", class_num))
     print(c("Class Width", class_width))
     
-    #Calculate intervals and midpoints
+    #Calculate intervals and midpoints 
     sequ = seq(min, max + class_width, class_width)
     intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
     abs_freq = table(intervals)
@@ -189,11 +189,16 @@ La central que ha llegado a valores altos de temperatura es la sede East. Estand
 con mayor aparicion en las sedes se encuentran en el intervalo de (61.8, 71.8], seguido por el intervalo (51.8, 61.8].
 
 ```{r}
-    min= min(temp_list)
-    max = max(temp_list)
-    sequ = seq(min, max + 10, 10)
-    intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
+    get_intervals <- function(sublist) {
+	min = min(sublist)
+    	max = max(sublist)
+    	sequ = seq(min, max + 10, 10)
+    	intervals = cut(sublist, sequ, right = TRUE, include.lowest = TRUE)
 
+	return (intervals)
+    }
+
+    intervals = get_intervals(temp_list)
     table = table(intervals, dat$branch)
     par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
     barplot(table, beside = T, col = rainbow(5), main = "Temperature for branch °C", legend.text = TRUE,
@@ -202,14 +207,13 @@ con mayor aparicion en las sedes se encuentran en el intervalo de (61.8, 71.8], 
 
 ### Problema 11
 
-
 Se han entregado mas pizzas los fines de semana (Viernes, Sabado y Domingo) que en el resto de la semana.
 
 ```{r}
     dat$weekend = ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
     
-    weekend_pizzas = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 10])
-    weekday_pizzas = sum(dat[dat$day != 'Friday' & dat$day != 'Saturday' & dat$day != 'Sunday', 10])
+    weekend_pizzas = sum(dat[dat$weekend == 1, 10])
+    weekday_pizzas = sum(dat[dat$weekend == 0, 10])
     
     par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
     barplot(c(weekday_pizzas, weekend_pizzas), main = "# Pizzas", col = 1:2)
@@ -221,11 +225,112 @@ Se ha conseguido mayor ganancia los fines de semana (Viernes, Sabado y Domingo) 
 existe mayor demanda de pizzas los fines de semana.
 
 ```{r}
-    weekend_bill = sum(dat[dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 9])
-    weekday_bill = sum(dat[dat$day != 'Friday' & dat$day != 'Saturday' & dat$day != 'Sunday', 9])
+    weekend_bill = sum(dat[dat$weekend == 1, 9])
+    weekday_bill = sum(dat[dat$weekend == 0, 9])
     
     par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
     barplot(c(weekday_bill, weekend_bill), main = "Earnings", col = 1:2)
     legend(3, 25000, legend=c("Weekday", "Weekend"),
            col = 1:2, cex=0.8, inset = c(-0.3, 0), fill = 1:2)
+```
+
+## Bloque 3
+
+## Problema 12
+
+```{r}
+    weekend_bill = sum(dat[dat$weekend == 1, 9])
+    mode <- function(v) {
+       uniqv <- unique(v)
+       uniqv[which.max(tabulate(match(v, uniqv)))]
+    }
+
+    # Temperature 
+    mean = mean(temp_list)
+    median = median(temp_list)
+    mode = mode(temp_list)
+    min = min(temp_list)
+    max = max(temp_list)
+    desv = sd(temp_list)
+    range = max - min
+    quantiles = quantile(temp_list, c(0.25), type = 6)
+
+    # Time
+    time_list = dat$time
+    mean = mean(time_list)
+    median = median(time_list)
+    mode = mode(time_list)
+    min = min(time_list)
+    max = max(time_list)
+    desv = sd(time_list)
+    range = max - min
+    quantiles = quantile(temp_list, c(0.25), type = 6)
+```
+
+## Problema 13
+
+```{r} 
+    # Temperature -> weekday - weekend
+    #min= min(temp_list)
+    #max = max(temp_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
+    
+    intervals = get_intervals(temp_list)
+    table = table(intervals, dat$day)
+    print(table)
+    table = table(intervals, ifelse(dat$weekend == 1, "Weekend", "Weekday"))
+    print(table)
+
+    # Time -> weekday - weekend
+    #min= min(time_list)
+    #max = max(time_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(time_list, sequ, right = TRUE, include.lowest = TRUE)
+
+    intervals = get_intervals(time_list)
+    table = table(intervals, dat$day)
+    print(table)
+    table = table(intervals, ifelse(dat$weekend == 1, "Weekend", "Weekday"))
+    print(table)
+
+    par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
+    barplot(table, beside = T, col = rainbow(5), main = "Time for weekday and weekend", legend.text = TRUE,
+	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
+
+    # Time -> branch
+    #min = min(time_list)
+    #max = max(time_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(time_list, sequ, right = TRUE, include.lowest = TRUE)
+
+    intervals = get_intervals(time_list)
+    table = table(intervals, dat$branch)
+    print(table)
+
+    # Temperature -> branch
+    #min = min(temp_list)
+    #max = max(temp_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
+
+    intervals = get_intervals(temp_list)
+    table = table(intervals, dat$branch)
+    print(table)
+    par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
+    barplot(table, beside = T, col = rainbow(5), main = "Time for weekday and weekend", legend.text = TRUE,
+	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
+```
+
+## Problema 13
+
+```{r} 
+    #min = min(time_list)
+    #max = max(time_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(time_list, sequ, right = TRUE, include.lowest = TRUE)
+
+    intervals =  get_intervals(time_list)
+    table = table(intervals, dat$driver)
+    print(table)
 ```
