@@ -1,7 +1,9 @@
 ---
 title: "Laboratorio 01"
 output:
-    pdf_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
 date: "2023-02-08"
 ---
 
@@ -97,7 +99,7 @@ table(dat[dat$free_wine==T & dat$got_wine==T,6])
 
 ## Bloque 2
 
-### Problema 1
+### Problema 9
 
 #### Temperature
 Como podemos observar en la siguiente tabla de frecuencia, la temperatura más habitual con la que se entrega la pizza varía en un rango dentro de (145,152] y (137,145], siendo el primero el más común. Además, la temperatura menos habitual se encuentra en un rango de (190,197], siendo solo 1 pizza la que se entregó con esta temperatura. Cabe recalcar que esta tabla de frecuencia se hizo con una número de clase igual a 5 para su análisis.
@@ -269,6 +271,8 @@ existe mayor demanda de pizzas los fines de semana.
 
 ## Problema 13
 
+Se puede observar en la siguiente tabla como la temperatura con la que es entregada las pizzas, varía considerablemente entre semana y fin de semana. Puesto en los días como viernes, sabado y domingo la mayoría de las pizzas son entregadas con una temperatura amena para el cliente. Variando entre 61.8 a 71.8 grados celcius, sin embargo también se entrega mayor cantidad de pizzas frías a comparación con los días de la semana. Esto posiblemente sea por la alta demanda de pizzas de la tienda en los fines de semana.
+
 ```{r} 
     # Temperature -> weekday - weekend
     #min= min(temp_list)
@@ -281,7 +285,11 @@ existe mayor demanda de pizzas los fines de semana.
     print(table)
     table = table(intervals, ifelse(dat$weekend == 1, "Weekend", "Weekday"))
     print(table)
+```
+En cuanto al tiempo de entrega, no se puede apreciar una gran diferencia entre los días seleccionados. El comportamiento es muy similar en ambos casos, variando la mayor cantidad de entregas entre 32.3 y 42.3 minutos.Por otro lado es inusual que se entreguen las pizzas en el intervalo 12.3 y 22.3, siendo estos los tiempos más pequeños de entrega que se han registrado. Además, cabe recalcar que para este caso de estudio realizamos un total de 4 intervalos.
 
+El comportamiento mencionado lo podemos observar en la siguiente grafica.  
+```{r} 
     # Time -> weekday - weekend
     #min= min(time_list)
     #max = max(time_list)
@@ -295,9 +303,12 @@ existe mayor demanda de pizzas los fines de semana.
     print(table)
 
     par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
-    barplot(table, beside = T, col = rainbow(5), main = "Time for weekday and weekend", legend.text = TRUE,
+    barplot(table, beside = T, col = c("red","yellow","green","blue","black"), main = "Time for weekday and weekend", legend.text = TRUE,
 	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
+```
+Analizando los tiempos de entrega entre las diferentes sedes, hay una notable diferencia entre la sedes West, East y Centre. Ya que a pesar de que la sede East no es de las que más numero de pizzas vende, es la que más rapido las entrega, llegando al punto de entregar 41 pizzas en un intervalo de 12.3 y 22.3 minutos (algo inusual en las demás sedes). Por otro lado, la sede Centre tiene los peores tiempos de entrega comparado con sus hermanas, esto probablemente debido a su contante demanda de pizzas todos los días de la semana.
 
+```{r} 
     # Time -> branch
     #min = min(time_list)
     #max = max(time_list)
@@ -307,7 +318,11 @@ existe mayor demanda de pizzas los fines de semana.
     intervals = get_intervals(time_list)
     table = table(intervals, dat$branch)
     print(table)
+```
+Con respecto a la temperatura, la sede East tambien saca ventaja a las sedes Centre y West, ya que comparandola con las otras 2, la sede East usualmente entrega las pizzas con una temperatura entre 67.8 y 71.8 grados celcius.
 
+Teniendo esta información y la de la tabla anterior (tiempo de entrega por sede), podemos decir que la sede East es la mejor sede de las 3, ya que además de entregar sus pizzas más rapido, las entrega más calientes.
+```{r} 
     # Temperature -> branch
     #min = min(temp_list)
     #max = max(temp_list)
@@ -318,7 +333,7 @@ existe mayor demanda de pizzas los fines de semana.
     table = table(intervals, dat$branch)
     print(table)
     par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
-    barplot(table, beside = T, col = rainbow(5), main = "Time for weekday and weekend", legend.text = TRUE,
+    barplot(table, beside = T, col = c("red","yellow","green","blue","black"), main = "Temperature for branches", legend.text = TRUE,
 	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
 ```
 
