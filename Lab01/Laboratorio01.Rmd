@@ -64,37 +64,81 @@ dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.
 ## Bloque 1
 
 ### Problema 5
-- day : cuantitativa-discreta
-- date : cualitativa-ordinal
-- time : cuantitativa-discreta
+- day : cualitativa-nominal
+- date : cuantitativa-discreta
+- time : cuantitativa-continua
 - operator : cualitativa-nominal
-- branch :
+- branch : cualitativa-nominal
 - driver : cualitativa-nominal
 - temperature : cuantitativa-continua
-- bill : cuantitativa-discreta
+- bill : cuantitativa-continua
 - pizzas : cuantitativa-discreta
-- free_wine : cualitativa-nominal
-- got_wine : cualitativa-nominal
-- discount_customer : cuantitativa-continua
+- free_wine : cuantitativa-discreta
+- got_wine : cuantitativa-discreta
+- discount_customer : cuantitativa-discreta
 
 ### Problema 6
 
+# - day : cualitativa-nominal
 ```{r p6}
-  fi <- table(dat$driver)
-  hi <- fi/length(dat$driver)
-  barplot(fi)
-  tabla <- cbind(fi,hi)
+(fi_day<-table(dat$day))
+(porc_2<-(fi_day/length(dat$day))*100)
+porc_2<-round(porc_2,2)
+pie(porc_2, porc_2, col = palette("Set 2"))
+legend(x ="bottomright", legend = names(fi_day), fill = palette("Set 2"))
 ```
+
+#- operator : cualitativa-nominal
+#preguntar etiqueta de barra
+```{r}
+(fi_operator<-table(dat$operator))
+(porc_2<-(fi_operator/length(dat$operator))*100)
+porc_2<-round(porc_2,2)
+barplot(porc_2, porc_2, col=4:6)
+legend(x ="topright", legend = names(fi_operator), fill = 4:6)
+```
+
+#- branch : cualitativa-nominal
+```{r}
+library(plotrix)
+(fi_branch<-table(dat$branch))
+(porc_2<-(fi_branch/length(dat$branch))*100)
+porc_2<-round(porc_2,2)
+pie3D(porc_2, labels = porc_2, col=2:9)
+legend(x ="bottomleft", legend = names(fi_branch), fill = 2:9)
+```
+
+#- driver : cualitativa-nominal
+#preguntar cambiar grosor etiqueta de barra
+```{r}
+(fi_driver<-table(dat$driver))
+(porc_2<-(fi_driver/length(dat$driver))*100)
+porc_2<-round(porc_2,2)
+barplot(porc_2, porc_2, col=3:8, horiz = TRUE, las=TRUE)
+legend(x ="topleft", legend = names(fi_driver), fill = 3:8)
+```
+
 ### Problema 7
 
 ```{r}
-table(dat[dat$free_wine==TRUE,7])
+library(plotrix)      
+datp7<-dat[dat$free_wine==1,]
+(p7<-table(datp7$driver))
+(porc_p7<-(p7/length(datp7$driver))*100)
+porc_p7<-round(porc_p7,2)
+pie3D(porc_p7, labels = porc_p7, col=2:9)
+legend(x ="top", legend = names(p7), fill = 2:9)
 ```
 
 ### Problema 8
 
 ```{r}
-table(dat[dat$free_wine==T & dat$got_wine==T,6])
+datp8<-dat[dat$free_wine==1&dat$got_wine==1,]
+(p8<-table(datp8$branch))
+(porc_p8<-(p8/length(datp8$branch))*100)
+porc_p8<-round(porc_p8,2)
+barplot(porc_p8, porc_p8, col=2:9)
+legend(x ="topright", legend = names(p8), fill = 2:9)
 ```
 
 
