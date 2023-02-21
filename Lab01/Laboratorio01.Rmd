@@ -1,5 +1,6 @@
 ---
 title: "Laboratorio 01"
+Author: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri" 
 output:
   html_document: default
   pdf_document: default
@@ -43,6 +44,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ### Problema 4
+
 ```{r, p4}
 library(readr)
 dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.csv")
