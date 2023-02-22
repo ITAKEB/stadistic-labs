@@ -80,7 +80,9 @@ dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.
 
 ### Problema 6
 
-# - day : cualitativa-nominal
+- day : cualitativa-nominal
+Con el gráfico podemos observar que los días en los que mayor número de pedidos se hacen son viernes y sabados, mientras que el miércoles es el día con menor número de pedidos.
+
 ```{r p6}
 (fi_day<-table(dat$day))
 (porc_2<-(fi_day/length(dat$day))*100)
@@ -91,6 +93,8 @@ legend(x ="bottomright", legend = names(fi_day), fill = palette("Set 2"))
 
 #- operator : cualitativa-nominal
 #preguntar etiqueta de barra
+En este caso se puede observar que la operadora Laura recibe mayor número de llamadas, aunque es miníma la diferencia entre operadoras.
+
 ```{r}
 (fi_operator<-table(dat$operator))
 (porc_2<-(fi_operator/length(dat$operator))*100)
@@ -100,6 +104,8 @@ legend(x ="topright", legend = names(fi_operator), fill = 4:6)
 ```
 
 #- branch : cualitativa-nominal
+Analizando la variable de sucursales se puede afirmar que la que se encuentra al oeste de la ciudad es la que recibe y atiende mayor número de pedidos. 
+
 ```{r}
 library(plotrix)
 (fi_branch<-table(dat$branch))
@@ -111,6 +117,9 @@ legend(x ="bottomleft", legend = names(fi_branch), fill = 2:9)
 
 #- driver : cualitativa-nominal
 #preguntar cambiar grosor etiqueta de barra
+
+De acuerdo a la gráfica, el repartidor con mayor número de entregas es Mario mientras que Domenico es el que ha realizado menor número de entregas.
+
 ```{r}
 (fi_driver<-table(dat$driver))
 (porc_2<-(fi_driver/length(dat$driver))*100)
@@ -121,6 +130,8 @@ legend(x ="topleft", legend = names(fi_driver), fill = 3:8)
 
 ### Problema 7
 
+El repartidor Bruno es el que más botellas de vino gratis tuvo que haber entregado a los clientes y Domenico el que menos botellas gratis tuvo que haber entregado.
+
 ```{r}
 library(plotrix)      
 datp7<-dat[dat$free_wine==1,]
@@ -128,10 +139,12 @@ datp7<-dat[dat$free_wine==1,]
 (porc_p7<-(p7/length(datp7$driver))*100)
 porc_p7<-round(porc_p7,2)
 pie3D(porc_p7, labels = porc_p7, col=2:9)
-legend(x ="top", legend = names(p7), fill = 2:9)
+legend(x ="bottom", legend = names(p7), fill = 2:9)
 ```
 
 ### Problema 8
+
+La sucursal en la que más frecuentemente se dio el hecho de entregar las botellas de vino gratis a los clientes fue la del centro.
 
 ```{r}
 datp8<-dat[dat$free_wine==1&dat$got_wine==1,]
@@ -142,4 +155,64 @@ barplot(porc_p8, porc_p8, col=2:9)
 legend(x ="topright", legend = names(p8), fill = 2:9)
 ```
 
+###bloque 3
+#problema 12
+
+mean = 62.86343 promedio de la variable de temperatura
+median = 62.9 medida central del conjunto de datos organizados de la variable temperatura
+min = 41.8 Minimo del conjunto de datos organizados de la variable temperatura
+max = 87.6 Máximo del conjunto de datos organizados de la variable temperatura
+desv = 6.906258 nos indica que la mayor parte de los datos de la variable temperatura tieden a estar             agrupados cerca a 6.906258
+range = 45.8 se puede observar la dispersión total que se tiene en el conjunto de datos de la variable temperatura
+var = 47.69639 Muestra una medida de dispersión en el conjunto de datos de la variable temperatura
+quantiles = 25% 58.2 
+
+
+```{r}
+    # Temperature 
+   temp_list<-dat$temperature
+  mean = mean(temp_list) 
+  median = median(temp_list) 
+  min = min(temp_list) 
+  (max = max(temp_list))
+  (desv = sd(temp_list))
+  (range = max - min)
+  (var = var(temp_list))
+  (quantiles = quantile(temp_list, c(0.25), type = 6))
+
+    # Time
+    time_list = dat$time
+    mean = mean(time_list)
+    median = median(time_list)
+    mode = mode(time_list)
+    min = min(time_list)
+    max = max(time_list)
+    desv = sd(time_list)
+    range = max - min
+    var = var(time_list)
+    quantiles = quantile(temp_list, c(0.25), type = 6)
+    
+      #     (mean = mean(time_list))
+      # [1] 34.22915
+      # > (median = median(time_list))
+      # [1] 34.4
+      # > (min = min(time_list))
+      # [1] 12.3
+      # > (max = max(time_list))
+      # [1] 53.1
+      # > (desv = sd(time_list))
+      # [1] 6.461669
+      # > (range = max - min)
+      # [1] 40.8
+      # > (var = var(time_list))
+      # [1] 41.75317
+      # > (quantiles = quantile(time_list, c(0.25), type = 6))
+      #    25% 
+      # 30.075 
+```
+
+problema 14
+```{r}
+
+```
 
