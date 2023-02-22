@@ -158,27 +158,37 @@ legend(x ="topright", legend = names(p8), fill = 2:9)
 ###bloque 3
 #problema 12
 
-mean = 62.86343 promedio de la variable de temperatura
-median = 62.9 medida central del conjunto de datos organizados de la variable temperatura
-min = 41.8 Minimo del conjunto de datos organizados de la variable temperatura
-max = 87.6 Máximo del conjunto de datos organizados de la variable temperatura
-desv = 6.906258 nos indica que la mayor parte de los datos de la variable temperatura tieden a estar             agrupados cerca a 6.906258
-range = 45.8 se puede observar la dispersión total que se tiene en el conjunto de datos de la variable temperatura
-var = 47.69639 Muestra una medida de dispersión en el conjunto de datos de la variable temperatura
-quantiles = 25% 58.2 
+Variable temperature
+mean = 62.86343 promedio de la variable de temperature
+median = 62.9 medida central del conjunto de datos organizados de la variable temperature
+min = 41.8 Minimo del conjunto de datos organizados de la variable temperature
+max = 87.6 Máximo del conjunto de datos organizados de la variable temperature
+desv = 6.906258 nos indica que la mayor parte de los datos de la variable temperature tienden a estar agrupados cerca a 6.906258
+range = 45.8 se puede observar la dispersión total que se tiene en el conjunto de datos de la variable temperature
+var = 47.69639 Muestra una medida de dispersión en el conjunto de datos de la variable temperature
+quantiles = 25% 58.2 El porcentaje de los datos que están en el cuartil 1 (0-25) es de 58.2
 
+variable time
+mean = 34.22915 promedio de la variable time
+median = 34.4 medida central del conjunto de datos organizados de la variable time
+min = 12.3 Minimo del conjunto de datos organizados de la variable time
+max = 53.1 Máximo del conjunto de datos organizados de la variable time
+desv = 6.461669 nos indica que la mayor parte de los datos de la variable time tienden a estar          agrupados cerca a 6.461669
+range = 40.8 se puede observar la dispersión total que se tiene en el conjunto de datos de la variable time
+var = 41.75317 Muestra una medida de dispersión en el conjunto de datos de la variable time
+quantiles = 25% 30.075 El porcentaje de los datos que están en el cuartil 1 (0-25) es de 30.075
 
 ```{r}
-    # Temperature 
-   temp_list<-dat$temperature
-  mean = mean(temp_list) 
-  median = median(temp_list) 
-  min = min(temp_list) 
-  (max = max(temp_list))
-  (desv = sd(temp_list))
-  (range = max - min)
-  (var = var(temp_list))
-  (quantiles = quantile(temp_list, c(0.25), type = 6))
+# Temperature 
+    temp_list<-dat$temperature
+    mean = mean(temp_list) 
+    median = median(temp_list) 
+    min = min(temp_list) 
+    max = max(temp_list)
+    desv = sd(temp_list)
+    range = max - min
+    var = var(temp_list)
+    quantiles = quantile(temp_list, c(0.25), type = 6)
 
     # Time
     time_list = dat$time
@@ -191,24 +201,6 @@ quantiles = 25% 58.2
     range = max - min
     var = var(time_list)
     quantiles = quantile(temp_list, c(0.25), type = 6)
-    
-      #     (mean = mean(time_list))
-      # [1] 34.22915
-      # > (median = median(time_list))
-      # [1] 34.4
-      # > (min = min(time_list))
-      # [1] 12.3
-      # > (max = max(time_list))
-      # [1] 53.1
-      # > (desv = sd(time_list))
-      # [1] 6.461669
-      # > (range = max - min)
-      # [1] 40.8
-      # > (var = var(time_list))
-      # [1] 41.75317
-      # > (quantiles = quantile(time_list, c(0.25), type = 6))
-      #    25% 
-      # 30.075 
 ```
 
 problema 14
