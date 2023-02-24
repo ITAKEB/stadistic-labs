@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(readr)
- dat <- read_csv("C:/Users/K0012/Downloads/pizzadelivery (1).csv")
+ dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.csv")
 ```
 
 ## Bloque 1
@@ -34,9 +34,11 @@ library(readr)
 
 ## Problema 6
 
-- day
+#### Day
 
-Con el gráfico podemos observar que los días en los que mayor número de pedidos se hacen son viernes y sabados, mientras que el miércoles es el día con menor número de pedidos.
+Con el gráfico podemos observar que los días en los que mayor número de pedidos 
+se hacen son viernes y sabados, mientras que el miércoles es el día con menor 
+número de pedidos.
 
 ```{r p6}
 (fi_day<-table(dat$day))
@@ -47,9 +49,10 @@ pie(porc_2, porc_2, col=1:8, main="Orders on the day")
 legend(x ="bottomright", legend = names(fi_day), fill = 1:8)
 ```
 
-- operator 
+#### Operator 
 
-En este caso se puede observar que la operadora Laura recibe mayor número de llamadas, aunque es mínima la diferencia entre operadoras.
+En este caso se puede observar que la operadora Laura recibe mayor número de 
+llamadas, aunque es mínima la diferencia entre operadoras.
 
 ```{r}
 (fi_operator<-table(dat$operator))
@@ -60,9 +63,10 @@ text(x = bp0, y = porc_2, labels = porc_2, pos=1)
 legend(x ="bottomright", legend = names(porc_2), fill = 4:6)
 ```
 
-- branch 
+#### Branch 
 
-Analizando la variable de sucursales se puede afirmar que la que se encuentra al oeste de la ciudad es la que recibe y atiende mayor número de pedidos. 
+Analizando la variable de sucursales se puede afirmar que la que se encuentra al
+oeste de la ciudad es la que recibe y atiende mayor número de pedidos. 
 
 ```{r}
 library(plotrix)
@@ -73,9 +77,10 @@ pie3D(porc_2, labels = porc_2, col=2:9, main="Branchs")
 legend(x ="top", legend = names(fi_branch), fill = 2:9)
 ```
 
-- driver
+#### Driver
 
-De acuerdo a la gráfica, el repartidor con mayor número de entregas es Mario mientras que Domenico es el que ha realizado menor número de entregas.
+De acuerdo a la gráfica, el repartidor con mayor número de entregas es Mario 
+mientras que Domenico es el que ha realizado menor número de entregas.
 
 ```{r}
 (fi_driver<-table(dat$driver))
@@ -86,9 +91,11 @@ text(x = bp1, y = porc_2, labels = porc_2, pos=1)
 legend(x ="bottomright", legend = names(porc_2), fill = 3:8)
 ```
 
-- free_wine
+#### Free_wine
 
-Esta gráfica representa el porcentaje de vinos gratis que prometían ser entregados por los repartidores a los clientes, 1 haciendo referencia a vinos que se tenían que entregar gratis.
+Esta gráfica representa el porcentaje de vinos gratis que prometían ser entregados
+por los repartidores a los clientes, 1 haciendo referencia a vinos que se tenían 
+que entregar gratis.
 
 ```{r}
 library(plotrix)
@@ -99,9 +106,11 @@ pie3D(porc_2, labels = porc_2, col=2:9, main="Free Wine")
 legend(x ="top", legend = names(fi_freewine), fill = 2:9)
 ```
 
-- got_wine
+#### Got_wine
 
-La gráfica muestra el porcentaje de botellas de vino gratis que si fueron entregadas a los clientes por los repartidores, siendo 1 el porcentaje de vinos entregados.
+La gráfica muestra el porcentaje de botellas de vino gratis que si fueron entregadas
+a los clientes por los repartidores, siendo 1 el porcentaje de vinos que si fueron 
+entregados.
 
 ```{r}
 (fi_gotwine<-table(dat$got_wine))
@@ -112,9 +121,10 @@ text(x = bp3, y = porc_2, labels = porc_2, pos=1)
 legend(x ="topright", legend = names(porc_2), fill = 5:7)
 ```
 
--discount_customer
+#### Discount_customer
 
-La gráfica muestra el porcentaje de veces que se hicieron o no descuentos a los clientes, siendo 1 el porcentaje de descuentos asignado.
+La gráfica muestra el porcentaje de veces que se hicieron o no descuentos a los 
+clientes, siendo 1 el porcentaje de descuentos asignado.
 
 ```{r}
 library(plotrix)
@@ -127,7 +137,8 @@ legend(x ="top", legend = names(fi_discountcustomer), fill = 4:6)
 
 ### Problema 7
 
-El repartidor Bruno es el que más botellas de vino gratis tuvo que haber entregado a los clientes y Domenico el que menos botellas gratis tuvo que haber entregado.
+El repartidor Bruno es el que más botellas de vino gratis tuvo que haber entregado
+a los clientes y Domenico el que menos botellas gratis tuvo que haber entregado.
 
 ```{r}
 datp7<-dat[dat$free_wine==1,]
@@ -140,7 +151,8 @@ legend(x= "topleft", legend = names(p7), fill = 2:9)
 
 ### Problema 8
 
-La sucursal en la que más frecuentemente se dio el hecho de entregar las botellas de vino gratis a los clientes fue la del centro.
+La sucursal en la que más frecuentemente se dio el hecho de entregar las botellas 
+de vino gratis a los clientes fue la del centro.
 
 ```{r}
 datp8<-dat[dat$free_wine==1&dat$got_wine==1,]
@@ -157,13 +169,13 @@ legend(x ="bottomright", legend = names(porc_p8), fill = 2:9)
 ### Problema 9
 
 #### Temperature
-Como podemos observar en la siguiente tabla de frecuencia, la temperatura más habitual con la que se entrega la pizza varía en un rango dentro de (145,152] y (137,145], siendo el primero el más común. Además, la temperatura menos habitual se encuentra en un rango de (190,197], siendo solo 1 pizza la que se entregó con esta temperatura. Cabe recalcar que esta tabla de frecuencia se hizo con una número de clase igual a 5 para su análisis.
+Como podemos observar en la siguiente tabla de frecuencia, la temperatura más habitual 
+con la que se entrega la pizza varía en un rango dentro de (145,152] y (137,145], 
+siendo el primero el más común. Además, la temperatura menos habitual se encuentra
+en un rango de (190,197], siendo solo 1 pizza la que se entregó con esta temperatura.
+Cabe recalcar que esta tabla de frecuencia se hizo con una número de clase igual a 5 para su análisis.
 
 ```{r}
-# Temperature
-    # library(readr)
-    # db = read_csv("./pizzadelivery.csv")
-    # Variable: Time
     temp_list = dat$temperature
     # Calculate information to create frequency table
     min = min(temp_list)
@@ -199,10 +211,13 @@ Como podemos observar en la siguiente tabla de frecuencia, la temperatura más h
 ```
 
 #### Time
-Por medio del siguiente gráfico, podemos notar como el tiempo más usual de una entrega se tarde entre 28.6 y 36.8 minutos, puesto que el 45% de las pizzas son entregadas en este periodo de tiempo. Por otro lado, lo menos habitual es que una pizza sea entregada en un periodo de 12.3 y 20.5 minutos, ya que solo el 2.21% de las pizzas son entregadas durante este.
+Por medio del siguiente gráfico, podemos notar como el tiempo más usual de una 
+entrega se tarde entre 28.6 y 36.8 minutos, puesto que el 45% de las pizzas son 
+entregadas en este periodo de tiempo. Por otro lado, lo menos habitual es que una 
+pizza sea entregada en un periodo de 12.3 y 20.5 minutos, ya que solo el 2.21% de 
+las pizzas son entregadas durante este.
 
 ```{r}
-#time
   min = min(dat$time)
   max = max(dat$time)
   k = 5
@@ -219,18 +234,20 @@ Por medio del siguiente gráfico, podemos notar como el tiempo más usual de una
 ```
 
 #### Bill
-Para el caso de la variable Bill (cuenta), realizamos el análisis de frecuencia mediante el siguiente histograma, describiendo el siguiente comportamiento:
+Para el caso de la variable Bill (cuenta), realizamos el análisis de frecuencia 
+mediante el siguiente histograma, describiendo el siguiente comportamiento:
  - Entre [35, 40) y [45,50) tienen una frecuencia absoluta mayor o igual a 200
  - Entre [0, 10) tienen una frecuencia absoluta de 1
  
 ```{r}
-# bill
   fi = hist(dat$bill, xlab= "Bill", ylab = "Frequency", main= "Histogram of bill", col = 2:3)
-  # fi$counts
 ```
 
 #### Pizzas
-Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la cantidad pedida con mayor frecuencia va de un rango de 2 a 3 pizzas por orden. A su vez, podemos ver en la siguiente ilustración como el numero de 8, 9 y 11 pizzas son las cantidades más inusuales en la tienda.
+Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la 
+cantidad pedida con mayor frecuencia va de un rango de 2 a 3 pizzas por orden. 
+A su vez, podemos ver en la siguiente ilustración como el numero de 8, 9 y 11 
+pizzas son las cantidades más inusuales en la tienda.
 
 ```{r}
   fi = table(dat$pizzas)
@@ -241,8 +258,10 @@ Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la c
 
 ### Problema 10
 
-La central que ha llegado a valores altos de temperatura es la sede East. Estando en el intervalo de (81.8, 91.8]. Por otro lado, la temperatura
-con mayor aparicion en las sedes se encuentran en el intervalo de (61.8, 71.8], seguido por el intervalo (51.8, 61.8].
+La central que ha llegado a valores altos de temperatura es la sede East. Estando
+en el intervalo de (81.8, 91.8]. Por otro lado, la temperatura
+con mayor aparicion en las sedes se encuentran en el intervalo de (61.8, 71.8],
+seguido por el intervalo (51.8, 61.8].
 
 ```{r}
     get_intervals <- function(sublist) {
@@ -261,7 +280,8 @@ con mayor aparicion en las sedes se encuentran en el intervalo de (61.8, 71.8], 
 
 ### Problema 11
 
-Se han entregado mas pizzas los fines de semana (Viernes, Sabado y Domingo) que en el resto de la semana.
+Se han entregado mas pizzas los fines de semana (Viernes, Sabado y Domingo) que 
+en el resto de la semana.
 
 ```{r}
     dat$weekend = ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
@@ -270,12 +290,13 @@ Se han entregado mas pizzas los fines de semana (Viernes, Sabado y Domingo) que 
     weekday_pizzas = sum(dat[dat$weekend == 0, 10])
     
     par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
-    barplot(c(weekday_pizzas, weekend_pizzas), main = "# Pizzas", col = 1:2)
+    barplot(c(weekday_pizzas, weekend_pizzas), main = "Weekday vs Weekend", col = 1:2, ylab = "# Pizzas")
     legend(3, 2000, legend=c("Weekday", "Weekend"),
            col = 1:2, cex=0.8, inset = c(-0.3, 0), fill = 1:2)
 ```
 
-Se ha conseguido mayor ganancia los fines de semana (Viernes, Sabado y Domingo) que en el resto de la semana. Era de esperarse debido a que
+Se ha conseguido mayor ganancia los fines de semana (Viernes, Sabado y Domingo) 
+que en el resto de la semana. Era de esperarse debido a que
 existe mayor demanda de pizzas los fines de semana.
 
 ```{r}
@@ -283,7 +304,7 @@ existe mayor demanda de pizzas los fines de semana.
     weekday_bill = sum(dat[dat$weekend == 0, 9])
     
     par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
-    barplot(c(weekday_bill, weekend_bill), main = "Earnings", col = 1:2)
+    barplot(c(weekday_bill, weekend_bill), main = "Weekday vs Weekend", col = 1:2, ylab= "Earnings")
     legend(3, 25000, legend=c("Weekday", "Weekend"),
            col = 1:2, cex=0.8, inset = c(-0.3, 0), fill = 1:2)
 ```
@@ -293,7 +314,7 @@ existe mayor demanda de pizzas los fines de semana.
 
 ### Problema 12
 
--Variable Temperature
+#### Variable Temperature
 
 - mean = promedio de la variable de temperature
 - median = medida central del conjunto de datos organizados de la variable temperature
@@ -304,7 +325,7 @@ existe mayor demanda de pizzas los fines de semana.
 - var = Muestra una medida de dispersión en el conjunto de datos de la variable temperature
 - quantiles = El porcentaje de los datos que están en el cuartil 1 (0-25) es de 58.2
 
--Variable Time
+#### Variable Time
 
 - mean = promedio de la variable time
 - median = medida central del conjunto de datos organizados de la variable time
@@ -341,7 +362,13 @@ existe mayor demanda de pizzas los fines de semana.
 
 ## Problema 13
 
-Se puede observar en la siguiente tabla como la temperatura con la que es entregada las pizzas, varía considerablemente entre semana y fin de semana. Puesto en los días como viernes, sabado y domingo la mayoría de las pizzas son entregadas con una temperatura amena para el cliente. Variando entre 61.8 a 71.8 grados celcius, sin embargo también se entrega mayor cantidad de pizzas frías a comparación con los días de la semana. Esto posiblemente sea por la alta demanda de pizzas de la tienda en los fines de semana.
+Se puede observar en la siguiente tabla como la temperatura con la que es entregada
+las pizzas, varía considerablemente entre semana y fin de semana. Puesto en los días
+como viernes, sabado y domingo la mayoría de las pizzas son entregadas con una 
+temperatura amena para el cliente. Variando entre 61.8 a 71.8 grados celcius, sin
+embargo también se entrega mayor cantidad de pizzas frías a comparación con los
+días de la semana. Esto posiblemente sea por la alta demanda de pizzas de la tienda 
+en los fines de semana.
 
 ```{r} 
     # Temperature -> weekday - weekend
@@ -356,7 +383,12 @@ Se puede observar en la siguiente tabla como la temperatura con la que es entreg
     table = table(intervals, ifelse(dat$weekend == 1, "Weekend", "Weekday"))
     print(table)
 ```
-En cuanto al tiempo de entrega, no se puede apreciar una gran diferencia entre los días seleccionados. El comportamiento es muy similar en ambos casos, variando la mayor cantidad de entregas entre 32.3 y 42.3 minutos.Por otro lado es inusual que se entreguen las pizzas en el intervalo 12.3 y 22.3, siendo estos los tiempos más pequeños de entrega que se han registrado. Además, cabe recalcar que para este caso de estudio realizamos un total de 4 intervalos.
+En cuanto al tiempo de entrega, no se puede apreciar una gran diferencia entre los 
+días seleccionados. El comportamiento es muy similar en ambos casos, variando la mayor
+cantidad de entregas entre 32.3 y 42.3 minutos.Por otro lado es inusual que se entreguen
+las pizzas en el intervalo 12.3 y 22.3, siendo estos los tiempos más pequeños de entrega
+que se han registrado. Además, cabe recalcar que para este caso de estudio realizamos
+un total de 4 intervalos.
 
 El comportamiento mencionado lo podemos observar en la siguiente grafica.  
 ```{r} 
@@ -375,7 +407,13 @@ El comportamiento mencionado lo podemos observar en la siguiente grafica.
 	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
 ```
 
-Analizando los tiempos de entrega entre las diferentes sedes, hay una notable diferencia entre la sedes West, East y Centre. Ya que a pesar de que la sede East no es de las que más numero de pizzas vende, es la que más rapido las entrega, llegando al punto de entregar 41 pizzas en un intervalo de 12.3 y 22.3 minutos (algo inusual en las demás sedes). Por otro lado, la sede Centre tiene los peores tiempos de entrega comparado con sus hermanas, esto probablemente debido a su contante demanda de pizzas todos los días de la semana.
+Analizando los tiempos de entrega entre las diferentes sedes, hay una notable 
+diferencia entre la sedes West, East y Centre. Ya que a pesar de que la sede East 
+no es de las que más numero de pizzas vende, es la que más rapido las entrega, 
+llegando al punto de entregar 41 pizzas en un intervalo de 12.3 y 22.3 minutos
+(algo inusual en las demás sedes). Por otro lado, la sede Centre tiene los peores
+tiempos de entrega comparado con sus hermanas, esto probablemente debido a su
+contante demanda de pizzas todos los días de la semana.
 
 ```{r} 
     # Time -> branch
@@ -387,9 +425,13 @@ Analizando los tiempos de entrega entre las diferentes sedes, hay una notable di
     table = table(intervals, dat$branch)
     print(table)
 ```
-Con respecto a la temperatura, la sede East tambien saca ventaja a las sedes Centre y West, ya que comparandola con las otras 2, la sede East usualmente entrega las pizzas con una temperatura entre 67.8 y 71.8 grados celcius.
+Con respecto a la temperatura, la sede East tambien saca ventaja a las sedes Centre 
+y West, ya que comparandola con las otras 2, la sede East usualmente entrega las 
+pizzas con una temperatura entre 67.8 y 71.8 grados celcius.
 
-Teniendo esta información y la de la tabla anterior (tiempo de entrega por sede), podemos decir que la sede East es la mejor sede de las 3, ya que además de entregar sus pizzas más rapido, las entrega más calientes.
+Teniendo esta información y la de la tabla anterior (tiempo de entrega por sede),
+podemos decir que la sede East es la mejor sede de las 3, ya que además de entregar 
+sus pizzas más rapido, las entrega más calientes.
 ```{r} 
     # Temperature -> branch
     #min = min(temp_list)
@@ -406,8 +448,12 @@ Teniendo esta información y la de la tabla anterior (tiempo de entrega por sede
 
 ## Problema 14
 
-Teniendo en cuenta el tiempo de entrega de cada repatidor durante el mes de mayo, se puede deducir que el que tuvo mejor rendimiento fue Domenico ubicándose en el cuartil inferior; es decir, Domenico es el que se más cerca al mínimo de datos del tiempo, por lo tanto, se entiende que fue el que tuvo mejor rendimiento respecto a esta variable.
+Teniendo en cuenta el tiempo de entrega de cada repatidor durante el mes de mayo,
+se puede deducir que el que tuvo mejor rendimiento fue Domenico ubicándose en el
+cuartil inferior; es decir, Domenico es el que se más cerca al mínimo de datos 
+del tiempo, por lo tanto, se entiende que fue el que tuvo mejor rendimiento 
+respecto a esta variable.
 
 ```{r} 
-        boxplot(dat$time ~ dat$driver, horizontal= FALSE,border = par("fg"), col = 1:6, log = "")
+    boxplot(dat$time ~ dat$driver, horizontal= FALSE,border = par("fg"), col = 1:6, log = "")
 ```
