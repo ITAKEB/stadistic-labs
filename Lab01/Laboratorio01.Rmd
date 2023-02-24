@@ -1,64 +1,17 @@
 ---
-title: "Laboratorio 01"
-Authors: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri" 
-output:
-  html_document: default
-  pdf_document: default
-date: "2023-02-21"
+title: "Laboratorio 1 Estadística general"
+author: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri "
+date: "2023-02-23"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Bloque 0
-
-### Problema 1
-
-```{r, p1}
-  x = c(1,2,3,4)
-  y = seq(1:10)
-  z = seq(2,10,2)
-  w = rep(0,10)
-  y[3] = 1
-```
-
-### Problema 2
-
-```{r, p2}
-  curve(x+1, from=1, to=10 ,xlab="x", ylab="y")
-  curve((x^2)+1, from=1, to=10, xlab="x", ylab="y")
-  curve(sin(x), from=1, to=10, xlab="x", ylab="y")
-  curve(cos(x), from=1, to=10, xlab="x", ylab="y")
-  curve(log(x), from=1, to=10, xlab="x", ylab="y")
-```
-
-### Problema 3
-
-```{r,p3}
-  curve(x+1, from=1, to=10 ,xlab="x", ylab="y")
-  curve((x^2)+1, from=1, to=10, xlab="x", ylab="y")
-  curve(sin(x), from=1, to=10, xlab="x", ylab="y")
-  curve(cos(x), from=1, to=10, xlab="x", ylab="y")
-  curve(log(x), from=1, to=10, xlab="x", ylab="y")
-```
-
-### Problema 4
-
-```{r, p4}
+```{r}
 library(readr)
-dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.csv")
-  #str(dat)
-  #dim(dat)
-  #colnames(dat)
-  #names(dat)
-  #nrow(dat)
-  #ncol(dat)
-  #head(dat)
-  #tail(dat)
-  dat["temperature"] = (dat["temperature"] * (9/5)) + 32
-  dat[dat$driver == 'Domenico',]
-  dat[dat$pizzas >= 4,"day"]
+ dat <- read_csv("C:/Users/K0012/Downloads/pizzadelivery (1).csv")
 ```
 
 ## Bloque 1
@@ -74,36 +27,41 @@ dat <- read_csv("C:/Users/Peanut/Desktop/Estadistica/Laboratorio1/pizzadelivery.
 - temperature : cuantitativa-continua
 - bill : cuantitativa-continua
 - pizzas : cuantitativa-discreta
-- free_wine : cuantitativa-discreta
-- got_wine : cuantitativa-discreta
-- discount_customer : cuantitativa-discreta
+- free_wine : cualitativa-nominal
+- got_wine : cualitativa-nominal
+- discount_customer : cualitativa-nominal
 
-### Problema 6
 
-- day : cualitativa-nominal
+## Problema 6
+
+- day
+
 Con el gráfico podemos observar que los días en los que mayor número de pedidos se hacen son viernes y sabados, mientras que el miércoles es el día con menor número de pedidos.
 
 ```{r p6}
 (fi_day<-table(dat$day))
 (porc_2<-(fi_day/length(dat$day))*100)
 porc_2<-round(porc_2,2)
-pie(porc_2, porc_2, col = palette("Set 2"))
-legend(x ="bottomright", legend = names(fi_day), fill = palette("Set 2"))
+palette("Set 2")
+pie(porc_2, porc_2, col=1:8, main="Orders on the day")
+legend(x ="bottomright", legend = names(fi_day), fill = 1:8)
 ```
 
-#- operator : cualitativa-nominal
-#preguntar etiqueta de barra
-En este caso se puede observar que la operadora Laura recibe mayor número de llamadas, aunque es miníma la diferencia entre operadoras.
+- operator 
+
+En este caso se puede observar que la operadora Laura recibe mayor número de llamadas, aunque es mínima la diferencia entre operadoras.
 
 ```{r}
 (fi_operator<-table(dat$operator))
 (porc_2<-(fi_operator/length(dat$operator))*100)
 porc_2<-round(porc_2,2)
-barplot(porc_2, porc_2, col=4:6)
-legend(x ="topright", legend = names(fi_operator), fill = 4:6)
+bp0<-barplot(porc_2, porc_2, col=4:6, main="Operators")
+text(x = bp0, y = porc_2, labels = porc_2, pos=1)
+legend(x ="bottomright", legend = names(porc_2), fill = 4:6)
 ```
 
-#- branch : cualitativa-nominal
+- branch 
+
 Analizando la variable de sucursales se puede afirmar que la que se encuentra al oeste de la ciudad es la que recibe y atiende mayor número de pedidos. 
 
 ```{r}
@@ -111,12 +69,11 @@ library(plotrix)
 (fi_branch<-table(dat$branch))
 (porc_2<-(fi_branch/length(dat$branch))*100)
 porc_2<-round(porc_2,2)
-pie3D(porc_2, labels = porc_2, col=2:9)
-legend(x ="bottomleft", legend = names(fi_branch), fill = 2:9)
+pie3D(porc_2, labels = porc_2, col=2:9, main="Branchs")
+legend(x ="top", legend = names(fi_branch), fill = 2:9)
 ```
 
-#- driver : cualitativa-nominal
-#preguntar cambiar grosor etiqueta de barra
+- driver
 
 De acuerdo a la gráfica, el repartidor con mayor número de entregas es Mario mientras que Domenico es el que ha realizado menor número de entregas.
 
@@ -124,8 +81,48 @@ De acuerdo a la gráfica, el repartidor con mayor número de entregas es Mario m
 (fi_driver<-table(dat$driver))
 (porc_2<-(fi_driver/length(dat$driver))*100)
 porc_2<-round(porc_2,2)
-barplot(porc_2, porc_2, col=3:8, horiz = TRUE, las=TRUE)
-legend(x ="topleft", legend = names(fi_driver), fill = 3:8)
+bp1<-barplot(porc_2, porc_2, col=3:8, main="Drivers", las=2)
+text(x = bp1, y = porc_2, labels = porc_2, pos=1)
+legend(x ="bottomright", legend = names(porc_2), fill = 3:8)
+```
+
+- free_wine
+
+Esta gráfica representa el porcentaje de vinos gratis que prometían ser entregados por los repartidores a los clientes, 1 haciendo referencia a vinos que se tenían que entregar gratis.
+
+```{r}
+library(plotrix)
+(fi_freewine<-table(dat$free_wine))
+(porc_2<-(fi_freewine/length(dat$free_wine))*100)
+porc_2<-round(porc_2,2)
+pie3D(porc_2, labels = porc_2, col=2:9, main="Free Wine")
+legend(x ="top", legend = names(fi_freewine), fill = 2:9)
+```
+
+- got_wine
+
+La gráfica muestra el porcentaje de botellas de vino gratis que si fueron entregadas a los clientes por los repartidores, siendo 1 el porcentaje de vinos entregados.
+
+```{r}
+(fi_gotwine<-table(dat$got_wine))
+(porc_2<-(fi_gotwine/length(dat$got_wine))*100)
+porc_2<-round(porc_2,2)
+bp3<-barplot(porc_2, porc_2, col=5:7, main="Got Wine")
+text(x = bp3, y = porc_2, labels = porc_2, pos=1)
+legend(x ="topright", legend = names(porc_2), fill = 5:7)
+```
+
+-discount_customer
+
+La gráfica muestra el porcentaje de veces que se hicieron o no descuentos a los clientes, siendo 1 el porcentaje de descuentos asignado.
+
+```{r}
+library(plotrix)
+(fi_discountcustomer<-table(dat$discount_customer))
+(porc_2<-(fi_discountcustomer/length(dat$discount_customer))*100)
+porc_2<-round(porc_2,2)
+pie3D(porc_2, labels = porc_2, col=4:6, main="Discount customer")
+legend(x ="top", legend = names(fi_discountcustomer), fill = 4:6)
 ```
 
 ### Problema 7
@@ -133,13 +130,12 @@ legend(x ="topleft", legend = names(fi_driver), fill = 3:8)
 El repartidor Bruno es el que más botellas de vino gratis tuvo que haber entregado a los clientes y Domenico el que menos botellas gratis tuvo que haber entregado.
 
 ```{r}
-library(plotrix)      
 datp7<-dat[dat$free_wine==1,]
 (p7<-table(datp7$driver))
 (porc_p7<-(p7/length(datp7$driver))*100)
 porc_p7<-round(porc_p7,2)
-pie3D(porc_p7, labels = porc_p7, col=2:9)
-legend(x ="bottom", legend = names(p7), fill = 2:9)
+pie(porc_p7, labels = porc_p7, col=2:9, main="Free Wine")
+legend(x= "topleft", legend = names(p7), fill = 2:9)
 ```
 
 ### Problema 8
@@ -151,60 +147,267 @@ datp8<-dat[dat$free_wine==1&dat$got_wine==1,]
 (p8<-table(datp8$branch))
 (porc_p8<-(p8/length(datp8$branch))*100)
 porc_p8<-round(porc_p8,2)
-barplot(porc_p8, porc_p8, col=2:9)
-legend(x ="topright", legend = names(p8), fill = 2:9)
+bp<-barplot(porc_p8, porc_p8, col=2:9, main="Free Wine and Got Wine")
+text(x =bp, y = porc_p8, labels = porc_p8, pos=1)
+legend(x ="bottomright", legend = names(porc_p8), fill = 2:9)
 ```
 
-###bloque 3
-#problema 12
+## Bloque 2
 
-Variable temperature
-mean = 62.86343 promedio de la variable de temperature
-median = 62.9 medida central del conjunto de datos organizados de la variable temperature
-min = 41.8 Minimo del conjunto de datos organizados de la variable temperature
-max = 87.6 Máximo del conjunto de datos organizados de la variable temperature
-desv = 6.906258 nos indica que la mayor parte de los datos de la variable temperature tienden a estar agrupados cerca a 6.906258
-range = 45.8 se puede observar la dispersión total que se tiene en el conjunto de datos de la variable temperature
-var = 47.69639 Muestra una medida de dispersión en el conjunto de datos de la variable temperature
-quantiles = 25% 58.2 El porcentaje de los datos que están en el cuartil 1 (0-25) es de 58.2
+### Problema 9
 
-variable time
-mean = 34.22915 promedio de la variable time
-median = 34.4 medida central del conjunto de datos organizados de la variable time
-min = 12.3 Minimo del conjunto de datos organizados de la variable time
-max = 53.1 Máximo del conjunto de datos organizados de la variable time
-desv = 6.461669 nos indica que la mayor parte de los datos de la variable time tienden a estar agrupados cerca a 6.461669
-range = 40.8 se puede observar la dispersión total que se tiene en el conjunto de datos de la variable time
-var = 41.75317 Muestra una medida de dispersión en el conjunto de datos de la variable time
-quantiles = 25% 30.075 El porcentaje de los datos que están en el cuartil 1 (0-25) es de 30.075
+#### Temperature
+Como podemos observar en la siguiente tabla de frecuencia, la temperatura más habitual con la que se entrega la pizza varía en un rango dentro de (145,152] y (137,145], siendo el primero el más común. Además, la temperatura menos habitual se encuentra en un rango de (190,197], siendo solo 1 pizza la que se entregó con esta temperatura. Cabe recalcar que esta tabla de frecuencia se hizo con una número de clase igual a 5 para su análisis.
+
+```{r}
+# Temperature
+    # library(readr)
+    # db = read_csv("./pizzadelivery.csv")
+    # Variable: Time
+    temp_list = dat$temperature
+    # Calculate information to create frequency table
+    min = min(temp_list)
+    max = max(temp_list)
+    length = length(temp_list)
+    range = max - min
+    class_num = round(1 + log(length, 2))
+    class_width = round(range / class_num, 2)
+    
+    print(c("Min", min))
+    print(c("Max", max))
+    print(c("Length", length))
+    print(c("Range", range))
+    print(c("Class Number", class_num))
+    print(c("Class Width", class_width))
+    
+    #Calculate intervals and midpoints 
+    sequ = seq(min, max + class_width, class_width)
+    intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
+    abs_freq = table(intervals)
+    midpoints = round((head(sequ, -1) + diff(sequ) / 2), 2)
+    
+    #Generate frequency table
+    freq_table = cbind(
+        Mark = midpoints,
+        Abs = abs_freq, 
+        Reltv = round(abs_freq / length(temp_list), 2), 
+        Acm = cumsum(abs_freq),
+        ReAcm = round(cumsum(abs_freq) / length(temp_list))
+    )
+    
+    print(freq_table)
+```
+
+#### Time
+Por medio del siguiente gráfico, podemos notar como el tiempo más usual de una entrega se tarde entre 28.6 y 36.8 minutos, puesto que el 45% de las pizzas son entregadas en este periodo de tiempo. Por otro lado, lo menos habitual es que una pizza sea entregada en un periodo de 12.3 y 20.5 minutos, ya que solo el 2.21% de las pizzas son entregadas durante este.
+
+```{r}
+#time
+  min = min(dat$time)
+  max = max(dat$time)
+  k = 5
+  A = (max-min)/ k
+  
+  intervals = cut(dat$time, breaks=seq(min, max, by = A), Right = TRUE, include.lowest=TRUE)
+  
+  fi = table(intervals)
+  porc = (fi/ length(dat$time))*100 
+  porc = round(porc,2)
+  
+  pie(porc, porc, col = 2:7, main= "Time")
+  legend("topleft",legend=names(fi), fill=2:7)
+```
+
+#### Bill
+Para el caso de la variable Bill (cuenta), realizamos el análisis de frecuencia mediante el siguiente histograma, describiendo el siguiente comportamiento:
+ - Entre [35, 40) y [45,50) tienen una frecuencia absoluta mayor o igual a 200
+ - Entre [0, 10) tienen una frecuencia absoluta de 1
+ 
+```{r}
+# bill
+  fi = hist(dat$bill, xlab= "Bill", ylab = "Frequency", main= "Histogram of bill", col = 2:3)
+  # fi$counts
+```
+
+#### Pizzas
+Para finalizar, en el caso de la variable "pizzas", nos encontramos con que la cantidad pedida con mayor frecuencia va de un rango de 2 a 3 pizzas por orden. A su vez, podemos ver en la siguiente ilustración como el numero de 8, 9 y 11 pizzas son las cantidades más inusuales en la tienda.
+
+```{r}
+  fi = table(dat$pizzas)
+  hi  = fi/length(dat$pizzas)
+  porc = (fi/ length(dat$pizzas))*100 
+  barplot(fi, col=3:4)
+```
+
+### Problema 10
+
+La central que ha llegado a valores altos de temperatura es la sede East. Estando en el intervalo de (81.8, 91.8]. Por otro lado, la temperatura
+con mayor aparicion en las sedes se encuentran en el intervalo de (61.8, 71.8], seguido por el intervalo (51.8, 61.8].
+
+```{r}
+    get_intervals <- function(sublist) {
+	min = min(sublist)
+    	max = max(sublist)
+    	sequ = seq(min, max + 10, 10)
+    	intervals = cut(sublist, sequ, right = TRUE, include.lowest = TRUE)
+	return (intervals)
+    }
+    intervals = get_intervals(temp_list)
+    table = table(intervals, dat$branch)
+    par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
+    barplot(table, beside = T, col = rainbow(5), main = "Temperature for branch °C", legend.text = TRUE,
+	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
+```
+
+### Problema 11
+
+Se han entregado mas pizzas los fines de semana (Viernes, Sabado y Domingo) que en el resto de la semana.
+
+```{r}
+    dat$weekend = ifelse(dat$day == 'Friday' | dat$day == 'Saturday' | dat$day == 'Sunday', 1, 0)
+    
+    weekend_pizzas = sum(dat[dat$weekend == 1, 10])
+    weekday_pizzas = sum(dat[dat$weekend == 0, 10])
+    
+    par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
+    barplot(c(weekday_pizzas, weekend_pizzas), main = "# Pizzas", col = 1:2)
+    legend(3, 2000, legend=c("Weekday", "Weekend"),
+           col = 1:2, cex=0.8, inset = c(-0.3, 0), fill = 1:2)
+```
+
+Se ha conseguido mayor ganancia los fines de semana (Viernes, Sabado y Domingo) que en el resto de la semana. Era de esperarse debido a que
+existe mayor demanda de pizzas los fines de semana.
+
+```{r}
+    weekend_bill = sum(dat[dat$weekend == 1, 9])
+    weekday_bill = sum(dat[dat$weekend == 0, 9])
+    
+    par(mar = c(5.1, 4.1, 4.1, 10), xpd = TRUE)
+    barplot(c(weekday_bill, weekend_bill), main = "Earnings", col = 1:2)
+    legend(3, 25000, legend=c("Weekday", "Weekend"),
+           col = 1:2, cex=0.8, inset = c(-0.3, 0), fill = 1:2)
+```
+
+
+## Bloque 3
+
+### Problema 12
+
+-Variable Temperature
+
+- mean = promedio de la variable de temperature
+- median = medida central del conjunto de datos organizados de la variable temperature
+- min = Minimo del conjunto de datos organizados de la variable temperature
+- max = Máximo del conjunto de datos organizados de la variable temperature
+- desv = nos indica que la mayor parte de los datos de la variable temperature tienden a estar agrupados cerca a 6.906258
+- range = se puede observar la dispersión total que se tiene en el conjunto de datos de la variable temperature
+- var = Muestra una medida de dispersión en el conjunto de datos de la variable temperature
+- quantiles = El porcentaje de los datos que están en el cuartil 1 (0-25) es de 58.2
+
+-Variable Time
+
+- mean = promedio de la variable time
+- median = medida central del conjunto de datos organizados de la variable time
+- min = Minimo del conjunto de datos organizados de la variable time
+- max = Máximo del conjunto de datos organizados de la variable time
+- desv = nos indica que la mayor parte de los datos de la variable time tienden a estar agrupados cerca a 6.461669
+- range = se puede observar la dispersión total que se tiene en el conjunto de datos de la variable time
+- var = Muestra una medida de dispersión en el conjunto de datos de la variable time
+- quantiles = El porcentaje de los datos que están en el cuartil 1 (0-25) es de 30.075
 
 ```{r}
 # Temperature 
     temp_list<-dat$temperature
-    mean = mean(temp_list) 
-    median = median(temp_list) 
-    min = min(temp_list) 
-    max = max(temp_list)
-    desv = sd(temp_list)
-    range = max - min
-    var = var(temp_list)
-    quantiles = quantile(temp_list, c(0.25), type = 6)
+    mean = mean(temp_list)                              #62.86343
+    median = median(temp_list)                          #62.9 
+    min = min(temp_list)                                #41.8 
+    max = max(temp_list)                                #87.6 
+    desv = sd(temp_list)                                #6.906258 
+    range = max - min                                   #45.8 
+    var = var(temp_list)                                #47.69639 
+    quantiles = quantile(temp_list, c(0.25), type = 6)  #25% 58.2 
 
-    # Time
-    time_list = dat$time
-    mean = mean(time_list)
-    median = median(time_list)
-    mode = mode(time_list)
-    min = min(time_list)
-    max = max(time_list)
-    desv = sd(time_list)
-    range = max - min
-    var = var(time_list)
-    quantiles = quantile(temp_list, c(0.25), type = 6)
+# Time
+    time_list<- dat$time 
+    mean = mean(time_list)                              #34.22915 
+    median = median(time_list)                          #34.4 
+    min = min(time_list)                                #12.3 
+    max = max(time_list)                                #53.1 
+    desv = sd(time_list)                                #6.461669 
+    range = max - min                                   #40.8 
+    var = var(time_list)                                #41.75317 
+    quantiles = quantile(temp_list, c(0.25), type = 6)  #25% 30.075
 ```
 
-problema 14
-```{r}
+## Problema 13
 
+Se puede observar en la siguiente tabla como la temperatura con la que es entregada las pizzas, varía considerablemente entre semana y fin de semana. Puesto en los días como viernes, sabado y domingo la mayoría de las pizzas son entregadas con una temperatura amena para el cliente. Variando entre 61.8 a 71.8 grados celcius, sin embargo también se entrega mayor cantidad de pizzas frías a comparación con los días de la semana. Esto posiblemente sea por la alta demanda de pizzas de la tienda en los fines de semana.
+
+```{r} 
+    # Temperature -> weekday - weekend
+    #min= min(temp_list)
+    #max = max(temp_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
+    
+    intervals = get_intervals(temp_list)
+    table = table(intervals, dat$day)
+    print(table)
+    table = table(intervals, ifelse(dat$weekend == 1, "Weekend", "Weekday"))
+    print(table)
+```
+En cuanto al tiempo de entrega, no se puede apreciar una gran diferencia entre los días seleccionados. El comportamiento es muy similar en ambos casos, variando la mayor cantidad de entregas entre 32.3 y 42.3 minutos.Por otro lado es inusual que se entreguen las pizzas en el intervalo 12.3 y 22.3, siendo estos los tiempos más pequeños de entrega que se han registrado. Además, cabe recalcar que para este caso de estudio realizamos un total de 4 intervalos.
+
+El comportamiento mencionado lo podemos observar en la siguiente grafica.  
+```{r} 
+    # Time -> weekday - weekend
+    #min= min(time_list)
+    #max = max(time_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(time_list, sequ, right = TRUE, include.lowest = TRUE)
+    intervals = get_intervals(time_list)
+    table = table(intervals, dat$day)
+    print(table)
+    table = table(intervals, ifelse(dat$weekend == 1, "Weekend", "Weekday"))
+    print(table)
+    par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
+    barplot(table, beside = T, col = c("red","yellow","green","blue","black"), main = "Time for weekday and weekend", legend.text = TRUE,
+	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
 ```
 
+Analizando los tiempos de entrega entre las diferentes sedes, hay una notable diferencia entre la sedes West, East y Centre. Ya que a pesar de que la sede East no es de las que más numero de pizzas vende, es la que más rapido las entrega, llegando al punto de entregar 41 pizzas en un intervalo de 12.3 y 22.3 minutos (algo inusual en las demás sedes). Por otro lado, la sede Centre tiene los peores tiempos de entrega comparado con sus hermanas, esto probablemente debido a su contante demanda de pizzas todos los días de la semana.
+
+```{r} 
+    # Time -> branch
+    #min = min(time_list)
+    #max = max(time_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(time_list, sequ, right = TRUE, include.lowest = TRUE)
+    intervals = get_intervals(time_list)
+    table = table(intervals, dat$branch)
+    print(table)
+```
+Con respecto a la temperatura, la sede East tambien saca ventaja a las sedes Centre y West, ya que comparandola con las otras 2, la sede East usualmente entrega las pizzas con una temperatura entre 67.8 y 71.8 grados celcius.
+
+Teniendo esta información y la de la tabla anterior (tiempo de entrega por sede), podemos decir que la sede East es la mejor sede de las 3, ya que además de entregar sus pizzas más rapido, las entrega más calientes.
+```{r} 
+    # Temperature -> branch
+    #min = min(temp_list)
+    #max = max(temp_list)
+    #sequ = seq(min, max + 10, 10)
+    #intervals = cut(temp_list, sequ, right = TRUE, include.lowest = TRUE)
+    intervals = get_intervals(temp_list)
+    table = table(intervals, dat$branch)
+    print(table)
+    par(mar = c(5.1, 4.1, 4.1, 8.1), xpd = TRUE)
+    barplot(table, beside = T, col = c("red","yellow","green","blue","black"), main = "Temperature for branches", legend.text = TRUE,
+	    args.legend = list(x = "topright", inset = c(-0.3, 0)))
+```
+
+## Problema 14
+
+Teniendo en cuenta el tiempo de entrega de cada repatidor durante el mes de mayo, se puede deducir que el que tuvo mejor rendimiento fue Domenico ubicándose en el cuartil inferior; es decir, Domenico es el que se más cerca al mínimo de datos del tiempo, por lo tanto, se entiende que fue el que tuvo mejor rendimiento respecto a esta variable.
+
+```{r} 
+        boxplot(dat$time ~ dat$driver, horizontal= FALSE,border = par("fg"), col = 1:6, log = "")
+```
