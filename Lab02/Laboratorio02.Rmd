@@ -1,0 +1,25 @@
+---
+title: "Laboratorio 2 Estadística general"
+author: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri "
+date: "2023-02-23"
+output: html_document
+---
+ 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+ 
+ 
+## Bloque 1
+ 
+
+
+## Bloque 2
+ 
+
+ 
+## Bloque 3
+ 
+
+
+## Bloque 4
