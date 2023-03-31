@@ -1,6 +1,6 @@
 ---
 title: "Laboratorio 2 Estadística general"
-author: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri "
+author: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri"
 date: "2023-02-23"
 output: html_document
 ---
@@ -15,9 +15,57 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Bloque 2
- 
+### Problema 2 
 
- 
+Se puede modelar el problema utilizando la distribución de Probabilidad Binomial, donde n es el numero de asientos 
+disponibles en el avion (100), x es el número de tiquetes vendidos (110), p es la probabilidad de que una persona no se 
+presente (0.12) y k es el número de personas que no pueden abordar el avión.
+
+- La probabilidad de que exactamente una persona no pueda aoordar el avión se calcula de la siguiente manera: 
+$$
+P(X = x) = \binom{n}{x} p^x(1-p)^{n-x}
+$$
+
+$$
+P(X = 101) = \binom{100}{101} 0.88^{101}(1-0.88)^{100-101}
+$$
+
+Usando la funcion de R `dbinom()`:
+
+```{r}
+dbinom(101, 110, 0.88)
+```
+
+- La probabilidad de que al menos una persona no pueda abordar el avion: 
+$$
+P(X > 100) =  \sum_{x=101}^{110}((\frac{110!}{x!(110-x)!}) 0.88^x(1-0.88)^{110-x})
+$$
+
+Usando la funcion de R `dbinom()`:
+
+```{r}
+pbinom(100, 110, 0.88, lower.tail=FALSE)
+```
+
+La probabilidad de que al menos una persona no aborde el avion es: `0.1366599`
+Si la empresa no est ́a dispuesta a tolerar un riesgo de no poder abordar el avi ́on en un porcentaje
+superior a un 5 por ciento, ¿Hasta cu ́antos tiquetes podr ́ıa vender de m ́as?
+
+- Los tiquetes que puede vender la aeroline si la empresa no esta dispuesta a tolerar un riesgo de no poder abordar el 
+avion en un procentaje superior a 5 por ciento.
+
+$$
+P(X > 100) = 
+$$
+
+```{R}
+qbinom(0.88, 100, 0.05, lower.tail = FALSE)
+```
+
+Si la empresa vende más de 103 boletos, hay una probabilidad mayor al 5% de que no todos los pasajeros puedan abordar 
+el avión. Por lo tanto, la empresa podría vender hasta 3 boletos adicionales, sin superar un riesgo del 5% de los 
+pasajeros no puedan abordar el avión.
+
 ## Bloque 3
  
 
