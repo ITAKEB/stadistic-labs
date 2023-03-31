@@ -1,18 +1,44 @@
 ---
 title: "Laboratorio 2 Estadística general"
 author: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri"
-date: "2023-02-23"
+date: "2023-03-23"
 output: html_document
 ---
- 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
- 
- 
-## Bloque 1
- 
 
+## Bloque 1
+```{r}
+#bloque1
+tabla <- table(datos)
+addmargins(tabla) #suma de filas y columnas
+prop.table(tabla) #sacar todas las prop de la tabla entre total
+prop.table(tabla,1) #sacar todas las prop de la tabla entre total de las filas (adulto y joven)
+prop.table(tabla,2) #sacar todas las prop de la tabla entre total de las columnas (cada deporte)
+```
+#Probabilidad de que una persona seleccionada al azar:
+
+  - Probabilidad de que juegue beisbol y sea adulta
+    R/ 0
+
+  - Probabilidad de que sea joven.
+    R/ 202/300= 0.67333333
+
+  - probabilidad de que juegue futbol dado que es una persona adulta.
+    R/ 0.44897959
+
+  - Probabilidad de que sea joven si le gusta jugar baloncesto.
+    R/ 0.6304348
+
+  - Probabilidad de que juegue baloncesto o b́eisbol dado que es una persona joven
+    R/ total de jovenes que juegan baloncesto y beisbol 58+68 = 126
+       126/202 = 0.6237623
+
+  - Probabilidad dado que es una persona adulta, no juegue tenis.
+    R/ total de adulto que no juegan tenis -> 34+0+44 = 78
+       78/98 = 0.7959183
 
 ## Bloque 2
 ### Problema 2 
@@ -69,7 +95,90 @@ abordar el avión. Por lo tanto, la empresa podría vender hasta 3 boletos adici
 del 5% de los pasajeros no puedan abordar el avión. 
 
 ## Bloque 3
- 
+```{r}
+# Bloque3
+
+#problema 3 binomial (discreta)
+
+#Verificación cumplimiento de los supuestos de la binomial.
+#-En el experimento encontramos un caso de exito, que en este caso es ser hembra y de fracaso que es ser macho
+#-Repetir n tipo de veces: si se cumple, ya que se están observando 100 ranas (n=100)
+#-Ensayos independientes, ya que si una rana es hembra o macho no afecta que la próxima sea hembra o macho
+#-La probabilidad se asume constante (0.53)
+
+# p: # de ranas hembras entre 100. 
+#n total de ranas.
+#k: caso exitoso en el que se encuentren exactamente 60 ranas hembras.
+
+n<-100
+p<-0.53
+k<-60
+
+binomial<-dbinom(k,n,p)
+#/ R  La probalidad  de que exactamente sean 60 ranas hembras es de 0.0301058
+
+# Para realizar una aproximación utilizamos la distribución normal. 
+#n*p: media de los datos.
+#n*p*q: desviación estándar
+
+normal=(pnorm(60.5,n*p,sqrt(n*p*(1-p)))-pnorm(59.5,n*p,sqrt(n*p*(1-p))))
+#0.02994174
+
+# R/ Esta aproximación nos indica que la propablidad de que sean hasta 60 es 0.02994174 y con estos resultados calculamos el porcentaje de error.
+
+error1<-((binomial-normal)/binomial)*100
+#El porcentaje de error entre la distribucción binomial y normal es de 0.5449448 
+
+#Problema 4 poisson 
+
+# X = Número de terremotos anuales 
+# d = desviación estandar
+
+X=19
+d=17
+exacto=1-ppois(19,17)
+#La probabilidad de que al menos se produzcan 20 terremotos al año es de 0.2636783
+# Para realizar una aproximación utilizamos la distribución normal
+
+aprox=1-pnorm(19.5,17,sqrt(17))
+# R/ Esta aproximación nos indica que la propabilidad de que al menos se produzcan 20 terremotos en el año es de 0.2721448 y con estos resultados calculamos el porcentaje de error.
+
+Error2=abs(((exacto-aprox)/exacto)*100)
+#El porcentaje de error entre la poisson y la distribución normal es de 3.210932
+```
 
 
 ## Bloque 4
+
+ - Tiempo medio entre dos llamadas sucesivas.
+ 
+Para encontrar el tiempo medio entre dos llamadas sucesivas, se puede utilizar el hecho de que la distribución exponencial tiene una media igual a 1/λ, donde λ es la tasa media de llegada de los eventos. En este caso, λ = 4 llamadas por minuto, por lo que el tiempo medio entre dos llamadas sucesivas es de 1/4 = 0.25 minutos o 15 segundos.
+
+```{r}
+#Probabilidad de que después de recibir una llamada, se produzca otra en menos de 10 segundos
+lambda = 4
+X = 10
+pexp(X, 1/(lambda*(60)))
+#R/ La probabilidad de recibir otra llamada en menos de 10 segundos es de : 4.081%
+
+#Probabilidad de que se produzcan exactamente cinco llamadas en un minuto
+X = 5
+dpois(X, lambda)
+
+#R/ La probabilidad de recibir exactamente 5 llamadas es de : 15.63%
+
+#Probabilidad de que se produzcan menos de cinco llamadas en un minuto.
+X = 5 - 1
+ppois(X, lambda)
+
+#R/ La probabilidad de recibir menos de 5 llamadas es de : 62.88%
+
+#Probabilidad de que se produzcan más de 40 llamadas en un período de ocho minutos.
+X = 40
+ppois(40, (lambda*8), FALSE)
+
+#R/ La probabilidad de que se produzcan más de 40 llamadas en 8 minutos es de : 7.07%
+
+```
+
+
