@@ -48,8 +48,6 @@ pbinom(100, 110, 0.88, lower.tail=FALSE)
 ```
 
 La probabilidad de que al menos una persona no aborde el avion es: `0.1366599`
-Si la empresa no est ́a dispuesta a tolerar un riesgo de no poder abordar el avi ́on en un porcentaje
-superior a un 5 por ciento, ¿Hasta cu ́antos tiquetes podr ́ıa vender de m ́as?
 
 - Los tiquetes que puede vender la aeroline si la empresa no esta dispuesta a tolerar un riesgo de no poder abordar el 
 avion en un procentaje superior a 5 por ciento.
