@@ -55,11 +55,15 @@ superior a un 5 por ciento, ¿Hasta cu ́antos tiquetes podr ́ıa vender de m �
 avion en un procentaje superior a 5 por ciento.
 
 $$
-P(X > 100) = 
+Q(p,n,p) = min[x: P(X ≤ x) ≥ p]
+$$
+
+$$
+Q(0.05,110,0.88) = min[x: P(X ≤ x) ≥ 0.05]
 $$
 
 ```{R}
-qbinom(0.88, 100, 0.05, lower.tail = FALSE)
+qbinom(0.88, 110, 0.05, lower.tail = FALSE)
 ```
 
 Si la empresa vende más de 103 boletos, hay una probabilidad mayor al 5% de que no todos los pasajeros puedan abordar 
