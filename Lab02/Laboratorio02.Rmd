@@ -26,7 +26,7 @@ prop.table(tabla,2) #sacar todas las prop de la tabla entre total de las columna
   - Probabilidad de que sea joven.
     R/ 202/300= 0.67333333
 
-  - probabilidad de que juegue futbol dado que es una persona adulta.
+  - Probabilidad de que juegue futbol dado que es una persona adulta.
     R/ 0.44897959
 
   - Probabilidad de que sea joven si le gusta jugar baloncesto.
