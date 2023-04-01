@@ -88,7 +88,7 @@ Q(0.05,110,0.88) = min[x: P(X ≤ x) ≥ 0.05]
 $$
 
 ```{R}
-qbinom(0.05, 110, 0.88, lower.tail = FALSE)
+qbinom(0.95, 110, 0.88, lower.tail = TRUE)
 ```
 
 Si la empresa vende más de 102 boletos, hay una probabilidad mayor al 5% de que no todos los pasajeros puedan 
