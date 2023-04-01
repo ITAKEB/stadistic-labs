@@ -20,32 +20,20 @@ prop.table(tabla,1) # Sacar todas las prop de la tabla entre total de las filas 
 prop.table(tabla,2) # Sacar todas las prop de la tabla entre total de las columnas (cada deporte)
 ```
 # Probabilidad de que una persona seleccionada al azar:
-
-  - Probabilidad de que juegue beisbol y sea adulta
-    R/ 0
-
-  - Probabilidad de que sea joven.
-    R/ 202/300= 0.67333333
-
-  - Probabilidad de que juegue futbol dado que es una persona adulta.
-    R/ 0.44897959
-
-  - Probabilidad de que sea joven si le gusta jugar baloncesto.
-    R/ 0.6304348
-
-  - Probabilidad de que juegue baloncesto o b́eisbol dado que es una persona joven
-    R/ total de jovenes que juegan baloncesto y beisbol 58+68 = 126
-       126/202 = 0.6237623
-
-  - Probabilidad dado que es una persona adulta, no juegue tenis.
-    R/ total de adulto que no juegan tenis -> 34+0+44 = 78
-       78/98 = 0.7959183
+- Probabilidad de que juegue beisbol y sea adulta R/ 0
+- Probabilidad de que sea joven. R/ 202 / 300= 0.67333333
+- Probabilidad de que juegue futbol dado que es una persona adulta. R/ 0.44897959
+- Probabilidad de que sea joven si le gusta jugar baloncesto. R/ 0.6304348
+- Probabilidad de que juegue baloncesto o béisbol dado que es una persona joven R/ total de jóvenes que juegan 
+  baloncesto y beisbol 58 + 68 = 126, 126 / 202 = 0.6237623
+- Probabilidad dado que es una persona adulta, no juegue tenis. R/ total de adulto que no juegan 
+  tenis = 34 + 0 + 44 = 78, 78 / 98 = 0.7959183
 
 ## Bloque 2
 ### Problema 2 
 
 Se puede modelar el problema utilizando la distribución de Probabilidad Binomial, donde `n` es el número de 
-asientos disponibles en el avión (100),`x` es el número de tiquetes vendidos (110),`p` es la probabilidad 
+asientos disponibles en el avión (100),`k` es el número de tiquetes vendidos (110),`p` es la probabilidad 
 de que una persona no se presente (0.12). 
 
 - La probabilidad de que exactamente una persona no pueda abordar el avión se calcula de la siguiente manera:  
@@ -84,7 +72,7 @@ Q(p,n,p) = min[x: P(X ≤ x) ≥ p]
 $$
 
 $$
-Q(0.05,110,0.88) = min[x: P(X ≤ x) ≥ 0.05]
+Q(0.95,110,0.88) = min[x: P(X ≤ x) ≥ 0.95]
 $$
 
 ```{R}
@@ -102,7 +90,7 @@ del 5% de los pasajeros no puedan abordar el avión.
 ### Problema 3 binomial (discreta)
 
 # Verificación cumplimiento de los supuestos de la binomial.
-#- En el experimento encontramos un caso de exito, que en este caso es ser hembra y de fracaso que es ser macho
+#- En el experimento encontramos un caso de éxito, que en este caso es ser hembra y de fracaso que es ser macho
 #- Repetir n tipo de veces: si se cumple, ya que se están observando 100 ranas (n=100)
 #- Ensayos independientes, ya que si una rana es hembra o macho no afecta que la próxima sea hembra o macho
 #- La probabilidad se asume constante (0.53)
