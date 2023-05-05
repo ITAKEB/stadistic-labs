@@ -161,3 +161,82 @@ No podemos rechazar la hipótesis nula
  
 ## Bloque 3
 
+```{r}
+# Parámetros
+mu <- 170.5
+sigma <- 8.4
+n <- 36
+x <- 167
+
+# Cálculo de la probabilidad
+s <- sigma / sqrt(n)
+t <- (x - mu) / s
+p <- pnorm(t)
+
+# Resultado
+p
+s
+t
+```
+
+```{r}
+# Datos del problema
+media <- 320
+desv <- 75
+n <- 30
+lim_inf <- 300
+lim_sup <- 340
+
+# Cálculo del error estándar
+s <- desv / sqrt(n)
+
+# Cálculo de los valores estandarizados de los límites
+z_inf <- (lim_inf - media) / s
+z_sup <- (lim_sup - media) / s
+
+# Cálculo de la probabilidad utilizando pnorm
+prob <- pnorm(z_sup) - pnorm(z_inf)
+
+# Resultado
+prob
+```
+
+```{r}
+# Especificamos los parámetros del problema
+mu <- 20 # media
+sigma <- 3 # desviación estándar
+n <- 15 # tamaño de la muestra
+varianza_limite <- 12 # límite de varianza
+
+# Calculamos la probabilidad utilizando la distribución chi-cuadrado
+df <- n - 1 # grados de libertad
+chi_cuadrado <- (n - 1) * varianza_limite / (sigma^2) 
+probabilidad <- pchisq(q = chi_cuadrado, df = df, lower.tail = FALSE)
+
+# Imprimimos el resultado
+cat("La probabilidad de que la varianza de la muestra exceda los", varianza_limite, "segundos es:", probabilidad, "\n")
+```
+
+
+```{r}
+# Datos del problema
+media <- 320
+desv <- 75
+n <- 100
+p <- 0.65
+q <- 0.75
+
+# Cálculo del error estándar
+s <- sqrt((q*(1-q)/n))
+
+# Cálculo de los valores estandarizados de los límites
+z <- (p - q) / s
+
+
+# Cálculo de la probabilidad utilizando pnorm
+prob <- pnorm(z)
+
+# Resultado
+prob
+```
+
