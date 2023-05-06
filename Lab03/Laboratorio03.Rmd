@@ -198,7 +198,7 @@ Por lo tanto, el limite superior es de `9.395509` y el limite inferior es de `7.
 No se puede afirmar que `El contenido promedio de alcochol en el jarabe llege a superar los 8 grados` Ya que este empieza desde `7.80`.
 ## Bloque 3
 
-### problema 7
+### Problema 7
 ```{r}
 lambda <- 1/5 # Definir lambda
 n <- 1000 # Definir tamaño de muestra
@@ -217,7 +217,7 @@ qqline(media_muestra)
 
 Analizando el gráfico se puede concluir que los resultados si son coherentes con lo que se esperaba teóricamente, ya que la tendencia de este como se puede observar se ajusta a una distribución normal alrededor de la media poblacional
 
-### problema 8
+### Problema 8
 
 H0 <= 150 hipotesis nula
 H1 > 150 hipotesis alternativa
