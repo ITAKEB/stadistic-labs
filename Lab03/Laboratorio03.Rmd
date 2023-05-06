@@ -1,7 +1,7 @@
 ---
 title: "Laboratorio 3 Estadística general"
 author: 'Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa
-  Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri '
+  Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri'
 date: "2023-02-23"
 output:
   html_document: default
@@ -141,7 +141,6 @@ cat("Varianza de los estimadores:", var_phat)
 ```
 ### Problema 5
 
-//Este punto se podia hacer despejando
 #### 1)
 Podemos simular una muestra de tiempos de atención en R y calcular el sesgo del estimador de la media muestral X̄.
 
@@ -168,29 +167,35 @@ xbar <- mean(x)
 
 # graficar el histograma y la curva de densidad
 hist(x, breaks = 30, probability = TRUE, col = "gray", main = "Histograma y curva de densidad")
-curve(dunif(x, xbar, xbar+1), add = TRUE, col = "red", lwd = 5)
+curve(dunif(x, xbar, xbar+1), add = TRUE, col = "green", lwd = 5)
 ```
-
+La curva de densidad de la distribución uniforme en el intervalo (x_barra, x_barra + 1) se ajusta bien a la forma del histograma, lo que indica que la media muestral x_barra es un buen estimador del parámetro θ. Por lo tanto, podemos concluir que, en promedio el tiempo de atención en la oficina gubernamental es de alrededor de 25.5 minutos, la media de la distribución uniforme en el intervalo (25, 26).
 
 ### Problema 6
 
 #### 1)
+Se debe determinar el intervalo de confianza con un nivel de certeza del 95% para la media de las botellas de jarabe. Para ello, se procederá a establecer las variables relevantes y calcular $Z_\alpha$ (Z_alpha).
 
 ```{r}
-
-
-
+media = 8.6
+desv = 2.87
+n = 50
+prob = 0.95
+z_alpha = 1 - prob
 ```
 
+Una vez incializada las variables, se procederá a hallar el limite inferior y superior.
+
+```{r}
+media + (qnorm(1-(z_alpha/2))*(desv/sqrt(n)))
+media - (qnorm(1-(z_alpha/2))*(desv/sqrt(n)))
+```
+
+Por lo tanto, el limite superior es de `9.395509` y el limite inferior es de `7.804491`
 
 #### 2)
-```{r}
 
-```
-
-
-
- 
+No se puede afirmar que `El contenido promedio de alcochol en el jarabe llege a superar los 8 grados` Ya que este empieza desde `7.80`.
 ## Bloque 3
 
 ### problema 7
@@ -209,6 +214,7 @@ qqnorm(media_muestra, pch=19, col="purple")
 qqline(media_muestra)
 
 ```
+
 Analizando el gráfico se puede concluir que los resultados si son coherentes con lo que se esperaba teóricamente, ya que la tendencia de este como se puede observar se ajusta a una distribución normal alrededor de la media poblacional
 
 ### problema 8
@@ -238,11 +244,17 @@ Se rechaza H0, ya que z = 11.2359 > z1 = 2.3263, entonces la producción es más
 
 ### Problema 9
 
-H0 -> p = 0.5 hipotesis nula
-H1 -> p > 0.5 hipotesis alternativa
+H0 -> p = 0.5 hipotesis nula, el hombre no tiene poderes extrasensoriales.
+H1 -> p > 0.5 hipotesis alternativa, el hombre si tiene poderes extrasensoriales.
 
 ```{r}
-p_value <- 1 - pbinom(20, 50, 0.5)
+n = 50
+p_hat = 21 / n
+p = 0.5
 alpha <- 0.05
+z_c = (p_hat - p)/sqrt((p_hat*(1-p_hat))/n)
+z_alpha = qnorm(1-alpha)
+z_c
+z_alpha
 ```
-
+z_c < z_alpha, por lo tanto, no podemos rechazar la hipótesis nula de que el hombre no tiene poderes extrasensoriales.
