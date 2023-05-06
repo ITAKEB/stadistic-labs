@@ -14,49 +14,110 @@ knitr::opts_chunk$set(echo = TRUE)
  
  
 ## Bloque 1
- 
 
+### Problema 1
+```{r}
+mu = 10
+sigma = sqrt(9)
+
+x1 <- rnorm(100, mean = mu, sd = sigma)
+hist(x1, prob = TRUE, main = "Histograma de X (100 simulaciones)")
+curve(dnorm(x, mean = mu, sd = sigma), add = TRUE, col = "blue", lwd = 3)
+```
+
+```{r}
+mu = 10
+sigma = sqrt(9)
+
+x2 <- rnorm(1000, mean = mu, sd = sigma)
+hist(x2, prob = TRUE, main = "Histograma de X (1000 simulaciones)")
+curve(dnorm(x, mean = mu, sd = sigma), add = TRUE, col = "green", lwd = 3)
+```
+
+```{r}
+mu = 10
+sigma = sqrt(9)
+
+x3 <- rnorm(10000, mean = mu, sd = sigma)
+hist(x3, prob = TRUE, main = "Histograma de X (10000 simulaciones)")
+curve(dnorm(x, mean = mu, sd = sigma), add = TRUE, col = "red", lwd = 3)
+```
+
+Al observar los 3 histogramas se puede concluir que al aumentar el valor de x (número de valores simulados), la forma del histograma va a acercarse mucho más a la curva de la densidad teórica
+
+### Problema 2
+
+x = probabilidad de que el IQ de la muestra sea mayor a 122
+```{r}
+
+x = 122
+mu = 120
+var = 100
+n = 25
+desv = sqrt(var)/sqrt(n)
+
+1-pnorm(x, mu, desv)
+
+```
+[1] 0.1586553
+
+La probabilidad de que el IQ de 25 estudiantes seleccionados sea mayor a 122 es del 15.87%
+
+```{r}
+x = 122
+var = 10
+
+n <- ceiling((qt(0.05, df = Inf, lower.tail = T) ^2 * var^2)/(x - mu)^2)
+n
+
+```
+[1] 68
+
+El tamaño de muestra necesario para garantizar que sólo el 5% de las veces el IQ promedio es superior a 122 es 68
+
+### Problema 3
+```{r}
+lambda <- 1/5 # Definir lambda
+n <- 1000 # Definir tamaño de muestra
+num_sim <- 10000 # Definir número de simulaciones
+
+# Simular 10,000 muestras aleatorias de la distribución exponencial
+datos_sim <- matrix(rexp(n*num_sim, lambda), ncol = num_sim)
+
+# Calcular el promedio de cada muestra aleatoria
+media_muestra <- apply(datos_sim, 2, mean) 
+
+# Construir histograma de los 10,000 promedios muestrales
+hist(media_muestra, breaks = 50, xlab = "Promedio muestral", main = "Histograma de los 10,000 promedios muestrales")
+```
+
+Los promedios de 10,000 muestras aleatorias con distribución exponencial tienden a tener una distribución normal como se observa en el histograma.
 
 ## Bloque 2
 
 ### Problema 4
 
 #### 1)
-El valor esperado de ˆp es:
+El valor esperado de p^ es:
 
-E(ˆp) = E(X/n) = (1/n) E(X) = (1/n) (n*p) = p
 
-Por lo tanto, podemos decir que ˆp es un estimador insesgado de p.
+E(p^) = E(X/n) = (1/n) E(X) = (1/n) (n*p) = p
 
-el estimador ˆp es insesgado para p y su varianza disminuye a medida que aumenta el tamaño de la muestra (n).
-```{r}
-# Parámetros
-n <- 50
-p <- 0.6
+Por lo tanto, por propiedades del valor esperado, podemos decir que el estimador p^ es insesgado para p.
 
-# Generar muestra
-x <- rbinom(n, n, p)
-
-# Estimador
-phat <- x/n
-
-# Valor esperado
-Ephat <- mean(phat)
-Ephat # Imprime el valor esperado de phat
-
-# Varianza
-Vphat <- var(phat)
-Vphat # Imprime la varianza de phat
-```
 #### 2)
 ```{r}
 n <- 20
 p <- seq(0, 1, 0.01)
 v <- p*(1-p)/n
 
-plot(p, v, type = "l", xlab = "p", ylab = "V(phat)", main = "Varianza del estimador phat")
-which.max(v)
+plot(p, v, type = "l", xlab = "p", ylab = "V(phat)", main = "Grafica de p vs V(p_hat) para n=20")
+
+maxIndex = which.max(v)
+p[maxIndex]
 ```
+La varianza de p_hat se maximiza en cuando p esta se va aproximando al centro del intervalo (0.4, 0.6), es decir, cuando p = 0.5
+
 
 #### 3)
 ```{r}
@@ -80,6 +141,7 @@ cat("Varianza de los estimadores:", var_phat)
 ```
 ### Problema 5
 
+//Este punto se podia hacer despejando
 #### 1)
 Podemos simular una muestra de tiempos de atención en R y calcular el sesgo del estimador de la media muestral X̄.
 
@@ -98,7 +160,6 @@ cat("Sesgo del estimador:", sesgo)
 
 #### 2)
 ```{r}
-set.seed(123) # establecemos una semilla para reproducibilidad
 theta <- 25
 x <- runif(10000, theta, theta+1)
 
@@ -107,136 +168,81 @@ xbar <- mean(x)
 
 # graficar el histograma y la curva de densidad
 hist(x, breaks = 30, probability = TRUE, col = "gray", main = "Histograma y curva de densidad")
-curve(dunif(x, xbar, xbar+1), add = TRUE, col = "red", lwd = 2)
+curve(dunif(x, xbar, xbar+1), add = TRUE, col = "red", lwd = 5)
 ```
 
 
 ### Problema 6
 
-#### 3)
+#### 1)
 
 ```{r}
-datos <- c(8.9, 7.5, 9.1, 8.3, 7.2, 9.5, 8.6, 9.0, 8.7, 7.8, 8.1, 9.2, 7.9, 8.5, 9.3, 7.7, 8.8, 9.4, 7.3, 8.4, 
-           8.2, 7.4, 8.0, 9.6, 7.6, 8.8, 9.1, 8.7, 8.4, 7.8, 9.0, 8.2, 9.2, 7.1, 8.5, 8.9, 9.3, 7.9, 8.6, 9.4, 7.2, 
-           8.3, 9.5, 7.7, 8.1, 9.6, 8.0, 8.8, 9.1)
 
-n <- length(datos)  # Tamaño de la muestra
-xbar <- mean(datos)  # Media muestral
-s <- sd(datos)  # Desviación estándar muestral
-alpha <- 0.05  # Nivel de significancia
 
-# Cálculo del intervalo de confianza
-t_val <- qt(1-alpha/2, df = n-1)  # Valor crítico de t
-lower_ci <- xbar - t_val*s/sqrt(n)  # Límite inferior del intervalo de confianza
-upper_ci <- xbar + t_val*s/sqrt(n)  # Límite superior del intervalo de confianza
 
-# Imprimir el resultado
-cat("El intervalo de confianza al 95% para µ es: (", round(lower_ci, 3), ", ", round(upper_ci, 3), ")", sep="")
 ```
 
 
 #### 2)
 ```{r}
-# Datos del problema
-x_barra <- 8.6
-s <- 2.87
-n <- 50
-mu <- 8
-alpha <- 0.05
 
-# Cálculo del estadístico de prueba y p-valor
-t <- (x_barra - mu) / (s/sqrt(n))
-p_valor <- pt(t, df = n-1, lower.tail = FALSE)
-
-# Cálculo del valor critico de t
-t_critico <- qt(alpha, df = n-1, lower.tail = FALSE)
-
-# Resultados
-cat("Valor de t =", t, "\n")
-cat("Valor critico de t =", t_critico, "\n")
-cat("p-valor =", p_valor, "\n")
 ```
-No podemos rechazar la hipótesis nula
+
+
 
  
 ## Bloque 3
 
+### problema 7
 ```{r}
-# Parámetros
-mu <- 170.5
-sigma <- 8.4
-n <- 36
-x <- 167
+lambda <- 1/5 # Definir lambda
+n <- 1000 # Definir tamaño de muestra
+num_sim <- 10000 # Definir número de simulaciones
 
-# Cálculo de la probabilidad
-s <- sigma / sqrt(n)
-t <- (x - mu) / s
-p <- pnorm(t)
+# Simular 10,000 muestras aleatorias de la distribución exponencial
+datos_sim <- matrix(rexp(n*num_sim, lambda), ncol = num_sim)
 
-# Resultado
-p
-s
-t
+# Calcular el promedio de cada muestra aleatoria
+media_muestra <- apply(datos_sim, 2, mean) 
+
+qqnorm(media_muestra, pch=19, col="purple")
+qqline(media_muestra)
+
+```
+Analizando el gráfico se puede concluir que los resultados si son coherentes con lo que se esperaba teóricamente, ya que la tendencia de este como se puede observar se ajusta a una distribución normal alrededor de la media poblacional
+
+### problema 8
+
+H0 <= 150 hipotesis nula
+H1 > 150 hipotesis alternativa
+
+```{r}
+#Para determinar la región de rechazo
+
+alfa = 0.01
+z1 = qnorm(alfa, lower.tail = F)
+z1
+
+#Estadistico
+
+xbar= 160
+n = 100
+desv = 8.9
+miu = 150
+ 
+z = (xbar-miu)/(desv/sqrt(n))
+z
 ```
 
-```{r}
-# Datos del problema
-media <- 320
-desv <- 75
-n <- 30
-lim_inf <- 300
-lim_sup <- 340
+Se rechaza H0, ya que z = 11.2359 > z1 = 2.3263, entonces la producción es más de 150 unidades por hora esto nos deja concluir que vale la pena la compra de las nuevas maquinas.
 
-# Cálculo del error estándar
-s <- desv / sqrt(n)
+### Problema 9
 
-# Cálculo de los valores estandarizados de los límites
-z_inf <- (lim_inf - media) / s
-z_sup <- (lim_sup - media) / s
-
-# Cálculo de la probabilidad utilizando pnorm
-prob <- pnorm(z_sup) - pnorm(z_inf)
-
-# Resultado
-prob
-```
+H0 -> p = 0.5 hipotesis nula
+H1 -> p > 0.5 hipotesis alternativa
 
 ```{r}
-# Especificamos los parámetros del problema
-mu <- 20 # media
-sigma <- 3 # desviación estándar
-n <- 15 # tamaño de la muestra
-varianza_limite <- 12 # límite de varianza
-
-# Calculamos la probabilidad utilizando la distribución chi-cuadrado
-df <- n - 1 # grados de libertad
-chi_cuadrado <- (n - 1) * varianza_limite / (sigma^2) 
-probabilidad <- pchisq(q = chi_cuadrado, df = df, lower.tail = FALSE)
-
-# Imprimimos el resultado
-cat("La probabilidad de que la varianza de la muestra exceda los", varianza_limite, "segundos es:", probabilidad, "\n")
-```
-
-
-```{r}
-# Datos del problema
-media <- 320
-desv <- 75
-n <- 100
-p <- 0.65
-q <- 0.75
-
-# Cálculo del error estándar
-s <- sqrt((q*(1-q)/n))
-
-# Cálculo de los valores estandarizados de los límites
-z <- (p - q) / s
-
-
-# Cálculo de la probabilidad utilizando pnorm
-prob <- pnorm(z)
-
-# Resultado
-prob
+p_value <- 1 - pbinom(20, 50, 0.5)
+alpha <- 0.05
 ```
 
