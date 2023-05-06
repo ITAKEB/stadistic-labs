@@ -1,8 +1,11 @@
 ---
 title: "Laboratorio 3 Estadística general"
-author: "Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri "
-date: "2023-02-23"
-output: html_document
+author: 'Katherine Benjumea Ortiz, Brigith Lorena Giraldo Vargas, Valentina Ochoa
+  Arboleda, Tomás Atehortua Ceferino, Danilo de Jesús Toro Echeverri'
+date: "2023-03-05"
+output:
+  html_document: default
+  pdf_document: default
 ---
  
 ```{r setup, include=FALSE}
@@ -11,15 +14,247 @@ knitr::opts_chunk$set(echo = TRUE)
  
  
 ## Bloque 1
- 
 
+### Problema 1
+```{r}
+mu = 10
+sigma = sqrt(9)
+
+x1 <- rnorm(100, mean = mu, sd = sigma)
+hist(x1, prob = TRUE, main = "Histograma de X (100 simulaciones)")
+curve(dnorm(x, mean = mu, sd = sigma), add = TRUE, col = "blue", lwd = 3)
+```
+
+```{r}
+mu = 10
+sigma = sqrt(9)
+
+x2 <- rnorm(1000, mean = mu, sd = sigma)
+hist(x2, prob = TRUE, main = "Histograma de X (1000 simulaciones)")
+curve(dnorm(x, mean = mu, sd = sigma), add = TRUE, col = "green", lwd = 3)
+```
+
+```{r}
+mu = 10
+sigma = sqrt(9)
+
+x3 <- rnorm(10000, mean = mu, sd = sigma)
+hist(x3, prob = TRUE, main = "Histograma de X (10000 simulaciones)")
+curve(dnorm(x, mean = mu, sd = sigma), add = TRUE, col = "red", lwd = 3)
+```
+
+Al observar los 3 histogramas se puede concluir que al aumentar el valor de x (número de valores simulados), la forma del histograma va a acercarse mucho más a la curva de la densidad teórica
+
+### Problema 2
+
+x = probabilidad de que el IQ de la muestra sea mayor a 122
+```{r}
+
+x = 122
+mu = 120
+var = 100
+n = 25
+desv = sqrt(var)/sqrt(n)
+
+1-pnorm(x, mu, desv)
+
+```
+[1] 0.1586553
+
+La probabilidad de que el IQ de 25 estudiantes seleccionados sea mayor a 122 es del 15.87%
+
+```{r}
+x = 122
+var = 10
+
+n <- ceiling((qt(0.05, df = Inf, lower.tail = T) ^2 * var^2)/(x - mu)^2)
+n
+
+```
+[1] 68
+
+El tamaño de muestra necesario para garantizar que sólo el 5% de las veces el IQ promedio es superior a 122 es 68
+
+### Problema 3
+```{r}
+lambda <- 1/5 # Definir lambda
+n <- 1000 # Definir tamaño de muestra
+num_sim <- 10000 # Definir número de simulaciones
+
+# Simular 10,000 muestras aleatorias de la distribución exponencial
+datos_sim <- matrix(rexp(n*num_sim, lambda), ncol = num_sim)
+
+# Calcular el promedio de cada muestra aleatoria
+media_muestra <- apply(datos_sim, 2, mean) 
+
+# Construir histograma de los 10,000 promedios muestrales
+hist(media_muestra, breaks = 50, xlab = "Promedio muestral", main = "Histograma de los 10,000 promedios muestrales")
+```
+
+Los promedios de 10,000 muestras aleatorias con distribución exponencial tienden a tener una distribución normal como se observa en el histograma.
 
 ## Bloque 2
- 
 
- 
+### Problema 4
+
+#### 1)
+El valor esperado de p^ es:
+
+
+E(p^) = E(X/n) = (1/n) E(X) = (1/n) (n*p) = p
+
+Por lo tanto, por propiedades del valor esperado, podemos decir que el estimador p^ es insesgado para p.
+
+#### 2)
+```{r}
+n <- 20
+p <- seq(0, 1, 0.01)
+v <- p*(1-p)/n
+
+plot(p, v, type = "l", xlab = "p", ylab = "V(phat)", main = "Grafica de p vs V(p_hat) para n=20")
+
+maxIndex = which.max(v)
+p[maxIndex]
+```
+La varianza de p_hat se maximiza en cuando p esta se va aproximando al centro del intervalo (0.4, 0.6), es decir, cuando p = 0.5
+
+
+#### 3)
+```{r}
+n <- 20
+p <- 0.5
+n_sim <- 10000
+
+# Simular 10,000 valores de X ~ Bin(20, 0.5)
+x <- rbinom(n_sim, n, p)
+
+# Calcular el estimador phat para cada valor de x
+phat <- x/n
+
+# Calcular el promedio y la varianza de los estimadores
+mean_phat <- mean(phat)
+var_phat <- var(phat)
+
+# Imprimir los resultados
+cat("Promedio de los estimadores:", mean_phat, "\n")
+cat("Varianza de los estimadores:", var_phat)
+```
+### Problema 5
+
+#### 1)
+Podemos simular una muestra de tiempos de atención en R y calcular el sesgo del estimador de la media muestral X̄.
+
+Para simular una muestra de n tiempos de atención con distribución uniforme en el intervalo (θ, θ + 1), podemos usar la función runif de la siguiente manera:
+
+```{r}
+n <- 100  # tamaño de la muestra
+theta <- 5  # valor desconocido de theta
+x <- runif(n, theta, theta + 1)  # simular la muestra
+
+x_bar <- mean(x)  # calcular la media muestral
+sesgo <- x_bar - theta  # calcular el sesgo
+
+cat("Sesgo del estimador:", sesgo)
+```
+
+#### 2)
+```{r}
+theta <- 25
+x <- runif(10000, theta, theta+1)
+
+# calcular la media muestral
+xbar <- mean(x)
+
+# graficar el histograma y la curva de densidad
+hist(x, breaks = 30, probability = TRUE, col = "gray", main = "Histograma y curva de densidad")
+curve(dunif(x, xbar, xbar+1), add = TRUE, col = "green", lwd = 5)
+```
+La curva de densidad de la distribución uniforme en el intervalo (x_barra, x_barra + 1) se ajusta bien a la forma del histograma, lo que indica que la media muestral x_barra es un buen estimador del parámetro θ. Por lo tanto, podemos concluir que, en promedio el tiempo de atención en la oficina gubernamental es de alrededor de 25.5 minutos, la media de la distribución uniforme en el intervalo (25, 26).
+
+### Problema 6
+
+#### 1)
+Se debe determinar el intervalo de confianza con un nivel de certeza del 95% para la media de las botellas de jarabe. Para ello, se procederá a establecer las variables relevantes y calcular $Z_\alpha$ (Z_alpha).
+
+```{r}
+media = 8.6
+desv = 2.87
+n = 50
+prob = 0.95
+z_alpha = 1 - prob
+```
+
+Una vez incializada las variables, se procederá a hallar el limite inferior y superior.
+
+```{r}
+media + (qnorm(1-(z_alpha/2))*(desv/sqrt(n)))
+media - (qnorm(1-(z_alpha/2))*(desv/sqrt(n)))
+```
+
+Por lo tanto, el limite superior es de `9.395509` y el limite inferior es de `7.804491`
+
+#### 2)
+
+No se puede afirmar que `El contenido promedio de alcochol en el jarabe llege a superar los 8 grados` Ya que este empieza desde `7.80`.
 ## Bloque 3
+
+### Problema 7
+```{r}
+lambda <- 1/5 # Definir lambda
+n <- 1000 # Definir tamaño de muestra
+num_sim <- 10000 # Definir número de simulaciones
+
+# Simular 10,000 muestras aleatorias de la distribución exponencial
+datos_sim <- matrix(rexp(n*num_sim, lambda), ncol = num_sim)
+
+# Calcular el promedio de cada muestra aleatoria
+media_muestra <- apply(datos_sim, 2, mean) 
+
+qqnorm(media_muestra, pch=19, col="purple")
+qqline(media_muestra)
+
+```
+
+Analizando el gráfico se puede concluir que los resultados si son coherentes con lo que se esperaba teóricamente, ya que la tendencia de este como se puede observar se ajusta a una distribución normal alrededor de la media poblacional
+
+### Problema 8
+
+H0 <= 150 hipotesis nula
+H1 > 150 hipotesis alternativa
+
+```{r}
+#Para determinar la región de rechazo
+
+alfa = 0.01
+z1 = qnorm(alfa, lower.tail = F)
+z1
+
+#Estadistico
+
+xbar= 160
+n = 100
+desv = 8.9
+miu = 150
  
+z = (xbar-miu)/(desv/sqrt(n))
+z
+```
 
+Se rechaza H0, ya que z = 11.2359 > z1 = 2.3263, entonces la producción es más de 150 unidades por hora esto nos deja concluir que vale la pena la compra de las nuevas maquinas.
 
-## Bloque 4
+### Problema 9
+
+H0 -> p = 0.5 hipotesis nula, el hombre no tiene poderes extrasensoriales.
+H1 -> p > 0.5 hipotesis alternativa, el hombre si tiene poderes extrasensoriales.
+
+```{r}
+n = 50
+p_hat = 21 / n
+p = 0.5
+alpha <- 0.05
+z_c = (p_hat - p)/sqrt((p_hat*(1-p_hat))/n)
+z_alpha = qnorm(1-alpha)
+z_c
+z_alpha
+```
+z_c < z_alpha, por lo tanto, no podemos rechazar la hipótesis nula de que el hombre no tiene poderes extrasensoriales.
