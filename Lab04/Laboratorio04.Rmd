@@ -15,6 +15,72 @@ knitr::opts_chunk$set(echo = TRUE)
  
 ## Bloque 1
 
+```{r}
+x = data$Publicidad
+y = data$Ventas
+mod = lm(y ~ x, data)
+summary(mod)
+
+```
 
 ## Bloque 2
+
+### 1
+¿Es el modelo lineal el mas adecuado para hacer una analisis de regresion en este caso? Realice una estimacion puntual de la desviacion estandar.
+```{r}
+plot(x,y)
+```
+
+
+```{r}
+r = cor(x,y)
+r^2
+```
+
+### 2
+Realice un breve estudio de los residuos que permita validar los supuestos de la regresion. Analizar linealidad y homocedasticidad. Incluya grafico de normalidad de los residuos estandarizados, contraste de hipotesis sobre normalidad e intervalo de confianza del 95 % .
+```{r}
+
+```
+
+
+
+### 3 
+Determine si el modelo es estadisticamente significativo
+
+R/ El modelo es estadisticamente significativo si se rechaza la hipotesis nula.
+```{r}
+
+```
+
+### 4
+Calcular la matriz de varianzas y covarianzas
+```{r}
+matvc = vcov(mod)
+matvc
+```
+
+### 5
+Calcular el error estandar de cada coeficiente.
+```{r}
+b0andb1var = diag(matvc)
+sqrt(b0andb1var)
+```
+
+
+### 6
+Determinar si β0 y β1 son estadisticamente significativos en el modelo
+R/ β0 y β1 son estadisticamente significativos si se rechaza la hipotesis nula.
+```{r}
+
+```
+
+### 7
+Calcule intervalos de confianza del 95 % y 99 % para los parametros β0 y β1.
+```{r}
+confint(mod, level = 0.99)
+```
+```{r}
+confint(mod, level = 0.95)
+```
 
