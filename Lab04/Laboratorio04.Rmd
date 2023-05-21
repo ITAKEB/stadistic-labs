@@ -19,14 +19,15 @@ knitr::opts_chunk$set(echo = TRUE)
 x = data$Publicidad
 y = data$Ventas
 mod = lm(y ~ x, data)
-summary(mod)
-
+modsum = summary(mod)
+modsum
 ```
 
 ## Bloque 2
 
 ### 1
-¿Es el modelo lineal el mas adecuado para hacer una analisis de regresion en este caso? Realice una estimacion puntual de la desviacion estandar.
+¿Es el modelo lineal el mas adecuado para hacer una analisis de regresion en
+este caso? Realice una estimacion puntual de la desviacion estandar.
 ```{r}
 plot(x,y)
 ```
@@ -38,9 +39,12 @@ r^2
 ```
 
 ### 2
-Realice un breve estudio de los residuos que permita validar los supuestos de la regresion. Analizar linealidad y homocedasticidad. Incluya grafico de normalidad de los residuos estandarizados, contraste de hipotesis sobre normalidad e intervalo de confianza del 95 % .
+Realice un breve estudio de los residuos que permita validar los supuestos de 
+la regresion. Analizar linealidad y homocedasticidad. Incluya grafico de
+normalidad de los residuos estandarizados, contraste de hipotesis sobre
+normalidad e intervalo de confianza del 95 % .
 ```{r}
-
+plot(mod)
 ```
 
 
@@ -48,10 +52,21 @@ Realice un breve estudio de los residuos que permita validar los supuestos de la
 ### 3 
 Determine si el modelo es estadisticamente significativo
 
-R/ El modelo es estadisticamente significativo si se rechaza la hipotesis nula.
+R/ El modelo es estadisticamente significativo si se rechaza la hipotesis
+nula.
 ```{r}
-
+fsta = modsum$fstatistic
+pValue = pf(fsta["value"], fsta["numdf"], fsta["dendf"], lower.tail = FALSE)
+pValue
 ```
+"F-statistic" muestra el valor del estadístico F y sus grados de libertad
+asociados. En este caso, el valor del estadístico F es 5.384 y tiene 1 y 39
+grados de libertad. "F-statistic" también muestra el valor p asociado al estadístico F (p-value), que en este caso es 0.02565
+
+Como el valor p es 0.02565, que es menor que 0.05. Se puede
+concluir que el modelo en su conjunto es estadísticamente significativo a un
+nivel de significancia del 0.05.
+
 
 ### 4
 Calcular la matriz de varianzas y covarianzas
@@ -70,10 +85,11 @@ sqrt(b0andb1var)
 
 ### 6
 Determinar si β0 y β1 son estadisticamente significativos en el modelo
-R/ β0 y β1 son estadisticamente significativos si se rechaza la hipotesis nula.
-```{r}
 
+```{r}
+modsum$coefficients
 ```
+Para el intercepto (β0), el valor p es 6.55e-07, que es mucho más pequeño que 0.05. Para la pendiente (β1), el valor p es 0.0256, también menor que 0.05. Por lo tanto, en ambos casos, se puede concluir que los coeficientes son estadísticamente significativos, ya que las hipótesis nulas correspondientes se rechazan a un nivel de significancia del 0.05.
 
 ### 7
 Calcule intervalos de confianza del 95 % y 99 % para los parametros β0 y β1.
