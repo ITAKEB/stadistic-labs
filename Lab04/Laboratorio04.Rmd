@@ -89,7 +89,11 @@ Determinar si β0 y β1 son estadisticamente significativos en el modelo
 ```{r}
 modsum$coefficients
 ```
-Para el intercepto (β0), el valor p es 6.55e-07, que es mucho más pequeño que 0.05. Para la pendiente (β1), el valor p es 0.0256, también menor que 0.05. Por lo tanto, en ambos casos, se puede concluir que los coeficientes son estadísticamente significativos, ya que las hipótesis nulas correspondientes se rechazan a un nivel de significancia del 0.05.
+Para el intercepto (β0), el valor p es 6.55e-07, que es mucho más pequeño que
+0.05. Para la pendiente (β1), el valor p es 0.0256, también menor que 0.05.
+Por lo tanto, en ambos casos, se puede concluir que los coeficientes son
+estadísticamente significativos, ya que las hipótesis nulas correspondientes se
+rechazan a un nivel de significancia del 0.05.
 
 ### 7
 Calcule intervalos de confianza del 95 % y 99 % para los parametros β0 y β1.
