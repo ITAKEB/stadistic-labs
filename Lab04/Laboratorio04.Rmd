@@ -47,7 +47,18 @@ normalidad e intervalo de confianza del 95 % .
 plot(mod)
 ```
 
+En el contexto de la linealidad, se observa una relación relativamente débil entre las variables, ya que los datos no siguen
+completamente una línea recta. Además, se identifican algunos valores atípicos notables, como los puntos 9, 30 y 40, que parecen
+desviarse significativamente de la tendencia general.
 
+Es importante tener en cuenta que estos valores atípicos pueden tener un impacto en el ajuste y la interpretación del modelo de
+regresión lineal. Estos puntos pueden ejercer una influencia desproporcionada en los resultados y afectar la precisión de las
+estimaciones de los coeficientes y los intervalos de confianza.
+
+Por otro lado, haciando el análisis si los datos cumplen o no homocedasticidad, se concluye que no se encuentra homocedasticidad en
+los datos, más bien heterocedasticidad. Ya que, la variabilidad de los errores no es constante y cambia a lo largo de los valores de
+las variables independientes. La dispersión de los residuos aumentan a medida que los valores de ventas cambian, lo que indica que
+la varianza de los errores no es constante.
 
 ### 3 
 Determine si el modelo es estadisticamente significativo
@@ -100,7 +111,22 @@ Calcule intervalos de confianza del 95 % y 99 % para los parametros β0 y β1.
 ```{r}
 confint(mod, level = 0.99)
 ```
+La columna 0.5% representa el límite inferior del intervalo de confianza al 0.5%, y la columna 99.5% representa el límite
+superior del intervalo de confianza al 99.5%.
+
+La fila Intercept indica el valor estimado de la variable dependiente cuando la variable independiente es igual a cero. El
+intervalo de confianza al 99% para el coeficiente de la intersección del modelo es [3.2944537, 8.8377682], lo que significa que se
+estima con un 99% de confianza.
+
+La fila ventas indica cómo cambia en promedio la variable dependiente cuando la variable independiente aumenta en una unidad. El
+intervalo de confianza al 99% para el coeficiente de ventas, la variable independiente, es [-0.0337083, 0.4372138]. Esto indica que
+se estima con un 99% de confianza que el valor verdadero del coeficiente de ventas se encuentra dentro de este intervalo.
 ```{r}
 confint(mod, level = 0.95)
 ```
+El intervalo de confianza del 95% para el coeficiente de la intersección (Intercept) del modelo es [3.99580602, 8.1364159], lo que
+significa que se estima con un 95% de confianza que el valor verdadero del coeficiente se encuentra dentro de este intervalo.
+
+El intervalo de confianza del 95% para el coeficiente de ventas, la variable independiente, es [0.02587379, 0.3776317]. Esto indica
+que se estima con un 95% de confianza que el valor verdadero del coeficiente de ventas se encuentra dentro de este intervalo.
 
