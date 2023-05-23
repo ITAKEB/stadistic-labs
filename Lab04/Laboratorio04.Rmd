@@ -112,10 +112,10 @@ print(paste("Coeficiente de correlación es:", correlacion2))
 
 ```
 Este coeficiente no es suficiente para determinar si el ajuste del modelo lineal
- es sólido, ya que para esto es necesario tener en cuenta otros parametros como 
- por ejemplo el tamño de la muestra, significancia estadística, entre otros.
- La información que nos proporciona este coeficiente es que el modelo presenta
- una correlación positiva y débil en las variables de publicidad y ventas.
+es sólido, ya que para esto es necesario tener en cuenta otros parametros como 
+por ejemplo el tamño de la muestra, significancia estadística, entre otros.
+La información que nos proporciona este coeficiente es que el modelo presenta
+una correlación positiva y débil en las variables de publicidad y ventas.
 
 ### 7
 ```{r}
