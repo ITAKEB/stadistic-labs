@@ -15,6 +15,124 @@ knitr::opts_chunk$set(echo = TRUE)
  
 ## Bloque 1
 
+### 1
+```{r}
+
+library(readr)
+ventypub = read_csv("C:/Users/K0012/OneDrive/Escritorio/universidad/Estadística/ventaypub.csv")
+```
+
+### 2
+```{r}
+
+ventas = ventypub$Ventas
+publicidad = ventypub$Publicidad
+
+#diagrma dispersión ventas vs publicidad
+plot(ventas, publicidad)
+modelo = lm(publicidad ~ ventas, data = ventypub)
+abline(modelo, col = "red")
+
+```
+De acuerdo a los datos reflejados en el diagrama de dispersión se puede observar que la
+relación de las dos variables es debil, ya que los datos son muy dispersos y no se
+observa algún patrón.
+
+
+### 3
+```{r}
+
+length(ventas)
+length(publicidad)
+
+b1=sum((publicidad-mean(publicidad))*(ventas-mean(ventas)))/sum((publicidad-mean(publicidad))^2)
+
+b0=mean(ventas)-b1*mean(publicidad)
+
+correlacion1 = cor(ventas,publicidad)
+
+#falta cual es la venta variable
+
+print(paste("Pendiente:", b1))
+print(paste("Intercepto:",b0))
+print(paste("La correlación entre la variable venta y publicidad es:",correlacion1))
+
+
+prom = mean(publicidad)
+
+venta_variable <- b1 * prom
+
+print(paste("la venta adicional es:",venta_variable))
+```
+#correlación positiva y débil
+
+### 4
+#regresión lineal con lm
+```{r}
+
+Ing = lm(ventas ~ publicidad)
+
+β0 = coef(Ing)[1] 
+β1 = coef(Ing)[2] 
+
+print(paste("β0:", β0))
+print(paste("β1:",β1))
+
+```
+Luego de realizar la regresión lineal usando el método de minimos cuadrados y
+la función lm de R, se logra observar que no hay discrepancia en los datos, ya
+que con ambos procedimientos se obtuvo el mismo resultado
+
+### 5
+```{r}
+
+resumen <- summary(Ing)
+
+coe_determinacion <- resumen$r.squared # Coeficiente de determinación (R cuadrado)
+
+coe_ajustado <- resumen$adj.r.squared # Coeficiente de determinación ajustado
+
+print(paste("R cuadrado:", coe_determinacion))
+print(paste("R cuadrado ajustado:",coe_ajustado))
+
+
+```
+El coeficiente de determinación es 0.12129, lo que significa que aproximadamente
+el 12,13% es la relación encontrada entre la influencia de la publicidad en las
+ventas y el coeficiente de determinación ajustado sugiere que no se han obtenido
+mejoras significativas con los gastos de publicidad, ya que este es menor que el
+de determinacion.
+
+
+### 6 
+```{r}
+
+correlacion2 = cor(ventas,publicidad)
+print(paste("Coeficiente de correlación es:", correlacion2))
+
+```
+Este coeficiente no es suficiente para determinar si el ajuste del modelo lineal
+ es sólido, ya que para esto es necesario tener en cuenta otros parametros como 
+ por ejemplo el tamño de la muestra, significancia estadística, entre otros.
+ La información que nos proporciona este coeficiente es que el modelo presenta
+ una correlación positiva y débil en las variables de publicidad y ventas.
+
+### 7
+```{r}
+
+costo_dado <- 22 
+
+nuevo_datos <- data.frame(ventas = costo_dado) 
+
+venta <- predict(Ing, newdata = data.frame(publicidad = costo_dado))
+
+print(paste("Ingreso por ventas (en millones de pesos):", venta))
+
+```
+
+
+## Bloque 2
+
 ```{r}
 x = data$Publicidad
 y = data$Ventas
@@ -22,8 +140,6 @@ mod = lm(y ~ x, data)
 modsum = summary(mod)
 modsum
 ```
-
-## Bloque 2
 
 ### 1
 ¿Es el modelo lineal el mas adecuado para hacer una analisis de regresion en
