@@ -28,7 +28,7 @@ ventypub = read_csv("C:/Users/K0012/OneDrive/Escritorio/universidad/Estadística
 ventas = ventypub$Ventas
 publicidad = ventypub$Publicidad
 
-#diagrma dispersión ventas vs publicidad
+#diagrama dispersión ventas vs publicidad
 plot(ventas, publicidad)
 modelo = lm(publicidad ~ ventas, data = ventypub)
 abline(modelo, col = "red")
