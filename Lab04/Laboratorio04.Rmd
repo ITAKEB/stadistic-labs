@@ -51,7 +51,6 @@ b0=mean(ventas)-b1*mean(publicidad)
 
 correlacion1 = cor(ventas,publicidad)
 
-#falta cual es la venta variable
 
 print(paste("Pendiente:", b1))
 print(paste("Intercepto:",b0))
@@ -67,7 +66,7 @@ print(paste("la venta adicional es:",venta_variable))
 #correlación positiva y débil
 
 ### 4
-#regresión lineal con lm
+Regresión lineal con lm
 ```{r}
 
 Ing = lm(ventas ~ publicidad)
